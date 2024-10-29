@@ -37,7 +37,7 @@ function Nav() {
     <header className="flex-row px-1">
       <h1>
         <Link to="/">
-          PlayWise
+          PROJECT 3
         </Link>
       </h1>
         <ul>
