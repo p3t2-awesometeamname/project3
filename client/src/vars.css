@@ -1,0 +1,11 @@
+:root{
+  /*color*/
+  --color-text: #fff;
+  --color-primary: #f00;
+  --color-secondary: #0f0;
+  --color-dark: #000;
+  --color-bg: #333;
+
+  /*font*/
+  --font-sans: sans-serif;
+  }
