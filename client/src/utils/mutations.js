@@ -10,7 +10,28 @@ export const LOGIN = gql`
     }
   }
 `;
-
+export const CREATE_GAME = gql`
+  mutation createGame(
+    $gameData: String!
+  )
+  {
+    createGame(gameData: $gameData) {
+    _id
+      lobbyName
+      hostUser {
+        _id
+        firstName
+        lastName
+      }
+      opponentUser {
+        _id
+        firstName
+        lastName
+      }
+      gamesSelection
+     
+    }
+  }`;
 export const ADD_USER = gql`
   mutation addUser(
     $firstName: String!

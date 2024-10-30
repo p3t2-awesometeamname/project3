@@ -1,5 +1,5 @@
-const { User } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { User, Game } = require('../models');
+require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -28,6 +28,7 @@ const resolvers = {
 
       return { token, user };
     },
+    
     updateUser: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, {
@@ -54,7 +55,16 @@ const resolvers = {
 
       return { token, user };
     },
-  },
+    createGame: async (parent, args) => {
+      return await Game.create(args);
+    },
+    updateGame: async (parent, args) => {
+      return await Game.findByIdAndUpdate(args._id, args, { new: true });
+    },
+    deleteGame: async (parent, { _id }) => {
+      return await Game.findByIdAndDelete(_id);
+    },
+   },
 };
 
 module.exports = resolvers;
