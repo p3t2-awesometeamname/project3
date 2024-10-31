@@ -18,10 +18,6 @@ const resolvers = {
     games: async () => {
       return await Game.find({});
     },
-=======
-      return User.find({});
-    }
-
   },
   Mutation: {
     addUser: async (parent, args) => {

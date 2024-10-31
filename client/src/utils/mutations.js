@@ -54,7 +54,6 @@ export const DELETE_GAME = gql`
   }
 `;
 
-=======
 
 export const UPDATE_USER = gql`
   mutation updateUser($tictactoewins: Int, $tictactoelosses: Int) {
