@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+// Users
+
 export const QUERY_USER = gql`
   {
     user {
@@ -18,4 +20,14 @@ export const QUERY_USERS = gql`
         email
     }
 }
+`;
+
+// Games
+
+export const QUERY_GAMES = gql`
+  {
+    games {
+      _id
+    }
+  }
 `;
