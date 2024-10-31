@@ -5,24 +5,23 @@ const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
+        const user = await User.findById(context.user._id);
         return user;
       }
 
       throw AuthenticationError;
     },
     users: async () => {
+
         return User.find({});
     },
     games: async () => {
       return await Game.find({});
     },
+=======
+      return User.find({});
+    }
+
   },
   Mutation: {
     addUser: async (parent, args) => {
