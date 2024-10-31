@@ -19,7 +19,10 @@ const resolvers = {
     },
     users: async () => {
         return User.find({});
-    }
+    },
+    games: async () => {
+      return await Game.find({});
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -57,9 +60,6 @@ const resolvers = {
     },
     createGame: async (parent, args) => {
       return await Game.create(args);
-    },
-    readAllGames: async () => {
-      return await Game.find({});
     },
     updateGame: async (parent, args) => {
       return await Game.findByIdAndUpdate(args._id, args, { new: true });

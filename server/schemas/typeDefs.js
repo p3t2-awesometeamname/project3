@@ -33,15 +33,12 @@ const typeDefs = `
     gamesSelection: String!
   }
   
-  type UserQuery {
+  type Query {
     user: User
     users: [User]
-  }
-
-  type GameQuery {
-    game: Game
     games: [Game]
   }
+
 
 
   type Mutation {

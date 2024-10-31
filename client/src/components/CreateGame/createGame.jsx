@@ -12,7 +12,7 @@ const CreateGame = () => {
   const handleLobbyNameChange = (e) => {
     setLobbyName(e.target.value);
   };
-
+  
   const handleGameTypeChange = (e) => {
     setGameType(e.target.value);
   };
