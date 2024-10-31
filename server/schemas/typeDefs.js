@@ -33,17 +33,22 @@ const typeDefs = `
     gamesSelection: String!
   }
   
-  type Query {
+  type UserQuery {
     user: User
     users: [User]
   }
+
+  type GameQuery {
+    game: Game
+    games: [Game]
+  }
+
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
     createGame(gameData: GameInput!): Game
-
     updateGame(_id: ID!, gameData: GameInput!): Game
     deleteGame(_id: ID!): Game
   }
