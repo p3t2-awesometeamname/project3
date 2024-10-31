@@ -9,7 +9,7 @@ const userSchema = new Schema({
     required: true,
     trim: true
   },
-  screenName: {
+  lastName: {
     type: String,
     required: true,
     trim: true

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Tictactoe.css';
 
-
 function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }) {
   const [board, setBoard] = useState(defaultBoard);
   const [xIsNext, setXIsNext] = useState(defaultXIsNext);
