@@ -1,5 +1,5 @@
 
-import CreateGame from "../components/CreateGame/CreateGame";
+import CreateGame from "../components/CreateGame/createGame";
 
 const Lobby = () => {
   return (
