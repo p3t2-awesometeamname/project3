@@ -4,6 +4,8 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
+    tictactoewins: Int
+    tictactoelosses: Int
   }
 
   type Auth {
@@ -18,7 +20,7 @@ const typeDefs = `
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
+    updateUser(firstName: String, lastName: String, email: String, password: String, tictactoewins: Int, tictactoelosses: Int): User
     login(email: String!, password: String!): Auth
   }
 `;
