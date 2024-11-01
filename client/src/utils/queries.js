@@ -22,12 +22,56 @@ export const QUERY_USERS = gql`
 }
 `;
 
+// export const QUERY_GAME = gql`
+//   {
+//     game {
+//       _id
+//     }
+//   }
+// `;
+
+
+
+export const QUERY_GAME = gql`
+{
+     game{
+    lobbyName
+    gamesSelection
+    hostUser {
+      firstName
+      _id
+    }
+    opponentUser {
+      firstName
+      _id
+    }
+  }
+}
+`;
+
 // Games
 
+// export const QUERY_GAMES = gql`
+//   {
+//     games {
+//       _id
+//       lobbyName
+//       hostUser
+//       gamesSelection
+//     }
+//   }
+// `;
+
 export const QUERY_GAMES = gql`
-  {
+  query GetGames {
     games {
       _id
+      lobbyName
+      gamesSelection
+      hostUser {
+        firstName
+        lastName
+      }
     }
   }
 `;

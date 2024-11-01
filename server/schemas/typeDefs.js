@@ -24,7 +24,6 @@ const typeDefs = `
   input UserInput {
     _id: ID
     firstName: String
-    lastName: String
     email: String
   }
 
@@ -38,6 +37,7 @@ const typeDefs = `
   type Query {
     user: User
     users: [User]
+    game(_id: ID!): Game
     games: [Game]
   }
 

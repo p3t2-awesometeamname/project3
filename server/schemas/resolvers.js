@@ -1,5 +1,6 @@
 const { User, Game } = require('../models');
-require('../utils/auth');
+const {signToken} = require('../utils/auth');
+// require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -15,8 +16,22 @@ const resolvers = {
 
         return User.find({});
     },
+    // game: async (parent, args, context) => {
+    //   console.log(args);
+    //   if (context.game) {
+    //     const game = await Game.findById(context.game._id);
+    //     console.log(game);
+    //     return game;
+    //   }
+    // },
+    game: async (parent, { _id }) => {
+      return await Game.findById(_id);
+    },
+
+
     games: async () => {
       return await Game.find({});
+      // return await Game.find({}).populate('hostUser');
     },
   },
   Mutation: {
@@ -53,11 +68,11 @@ const resolvers = {
 
       return { token, user };
     },
-    createGame: async (parent, args) => {
-      return await Game.create(args);
+    createGame: async (parent, {gameData}) => {
+      return await Game.create(gameData);
     },
-    updateGame: async (parent, args) => {
-      return await Game.findByIdAndUpdate(args._id, args, { new: true });
+    updateGame: async (parent, {gameData}) => {
+      return await Game.findByIdAndUpdate(gameData._id, gameData, { new: true });
     },
     deleteGame: async (parent, { _id }) => {
       return await Game.findByIdAndDelete(_id);
