@@ -33,20 +33,25 @@ export const QUERY_USERS = gql`
 
 
 export const QUERY_GAME = gql`
-{
-     game{
-    lobbyName
-    gamesSelection
-    hostUser {
-      firstName
+  query GetGame($id: ID!) {
+    game(id: $id) {
       _id
-    }
-    opponentUser {
-      firstName
-      _id
+      lobbyName
+      gamesSelection
+      hostUser {
+        _id
+        firstName
+        lastName
+        email
+      }
+      opponentUser {
+        _id
+        firstName
+        lastName
+        email
+      }
     }
   }
-}
 `;
 
 // Games

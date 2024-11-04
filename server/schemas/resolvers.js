@@ -16,19 +16,14 @@ const resolvers = {
 
         return User.find({});
     },
-    // game: async (parent, args, context) => {
-    //   console.log(args);
-    //   if (context.game) {
-    //     const game = await Game.findById(context.game._id);
-    //     console.log(game);
-    //     return game;
-    //   }
-    // },
-    game: async (parent, { _id }) => {
-      return await Game.findById(_id);
+    game: async (parent, { id }) => {
+      try {
+        return await Game.findById(id).populate('hostUser').populate('opponentUser');
+      } catch (err) {
+        console.log('Error in game resolver:', err);
+        throw new Error('Failed to fetch game');
+      }
     },
-
-
     games: async () => {
       return await Game.find({});
       // return await Game.find({}).populate('hostUser');

@@ -9,11 +9,11 @@ const typeDefs = `
   }
     
   type Game {
-    _id: ID
+    _id: ID!
     lobbyName: String
+    gamesSelection: String
     hostUser: User
     opponentUser: User
-    gamesSelection: String
   }
 
   type Auth {
@@ -37,7 +37,7 @@ const typeDefs = `
   type Query {
     user: User
     users: [User]
-    game(_id: ID!): Game
+    game(id: ID!): Game
     games: [Game]
   }
 

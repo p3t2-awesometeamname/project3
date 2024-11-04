@@ -1,5 +1,4 @@
-
-import TicTacToe from "../components/Tictactoe/Tictactoe";
+import { TicTacToe }from "../components/Games/Tictactoe/Tictactoe";
 
 const About = () => {
   return (
