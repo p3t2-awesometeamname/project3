@@ -23,6 +23,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5
+  },
+  tictactoewins: {
+    type: Number,
+    default: 0
+  },
+  tictactoelosses: {
+    type: Number,
+    default: 0
   }
 });
 

@@ -1,25 +1,33 @@
 const { User, Game } = require('../models');
-require('../utils/auth');
+const {signToken} = require('../utils/auth');
+// require('../utils/auth');
 
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
+        const user = await User.findById(context.user._id);
         return user;
       }
 
       throw AuthenticationError;
     },
     users: async () => {
+
         return User.find({});
-    }
+    },
+    game: async (parent, { id }) => {
+      try {
+        return await Game.findById(id).populate('hostUser').populate('opponentUser');
+      } catch (err) {
+        console.log('Error in game resolver:', err);
+        throw new Error('Failed to fetch game');
+      }
+    },
+    games: async () => {
+      return await Game.find({});
+      // return await Game.find({}).populate('hostUser');
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -55,14 +63,11 @@ const resolvers = {
 
       return { token, user };
     },
-    createGame: async (parent, args) => {
-      return await Game.create(args);
+    createGame: async (parent, {gameData}) => {
+      return await Game.create(gameData);
     },
-    readAllGames: async () => {
-      return await Game.find({});
-    },
-    updateGame: async (parent, args) => {
-      return await Game.findByIdAndUpdate(args._id, args, { new: true });
+    updateGame: async (parent, {gameData}) => {
+      return await Game.findByIdAndUpdate(gameData._id, gameData, { new: true });
     },
     deleteGame: async (parent, { _id }) => {
       return await Game.findByIdAndDelete(_id);

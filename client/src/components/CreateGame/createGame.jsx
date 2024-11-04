@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './CreateGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
-import getProfile from '../../utils/auth';
+import  AuthServices   from '../../utils/auth';
 
 const CreateGame = () => {
   const [lobbyName, setLobbyName] = useState('');
@@ -12,20 +12,24 @@ const CreateGame = () => {
   const handleLobbyNameChange = (e) => {
     setLobbyName(e.target.value);
   };
-
+  
   const handleGameTypeChange = (e) => {
     setGameType(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(AuthServices.getProfile().data)
     console.log(`Lobby Name: ${lobbyName}, Game Type: ${gameType}`);
     // Add logic to start the game
     const mutationResponse = await createGame({
         variables: {
-          host: getProfile(),
-          game: gameType,
+          gameData: {
+          hostUser: AuthServices.getProfile().data,
+          opponentUser: null,
+          gamesSelection: gameType,
           lobbyName: lobbyName,
+          }
         },
       });
      //START GAME LOGIC

@@ -4,14 +4,16 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
+    tictactoewins: Int
+    tictactoelosses: Int
   }
     
   type Game {
-    _id: ID
+    _id: ID!
     lobbyName: String
+    gamesSelection: String
     hostUser: User
     opponentUser: User
-    gamesSelection: String
   }
 
   type Auth {
@@ -22,7 +24,6 @@ const typeDefs = `
   input UserInput {
     _id: ID
     firstName: String
-    lastName: String
     email: String
   }
 
@@ -33,20 +34,18 @@ const typeDefs = `
     gamesSelection: String!
   }
   
-  type UserQuery {
+  type Query {
     user: User
     users: [User]
-  }
-
-  type GameQuery {
-    game: Game
+    game(id: ID!): Game
     games: [Game]
   }
 
 
+
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
+    updateUser(firstName: String, lastName: String, email: String, password: String, tictactoewins: Int, tictactoelosses: Int): User
     login(email: String!, password: String!): Auth
     createGame(gameData: GameInput!): Game
     updateGame(_id: ID!, gameData: GameInput!): Game
