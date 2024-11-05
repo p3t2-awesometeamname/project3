@@ -77,6 +77,10 @@ export const QUERY_GAMES = gql`
         firstName
         lastName
       }
+      opponentUser {
+        firstName
+        lastName
+      }
     }
   }
 `;
