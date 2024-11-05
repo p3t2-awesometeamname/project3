@@ -16,6 +16,7 @@ const resolvers = {
 
         return User.find({});
     },
+
     game: async (parent, { id }) => {
       try {
         return await Game.findById(id).populate('hostUser').populate('opponentUser');
@@ -27,6 +28,7 @@ const resolvers = {
     games: async () => {
       return await Game.find({});
       // return await Game.find({}).populate('hostUser');
+
     },
   },
   Mutation: {
@@ -63,11 +65,13 @@ const resolvers = {
 
       return { token, user };
     },
+
     createGame: async (parent, {gameData}) => {
       return await Game.create(gameData);
     },
     updateGame: async (parent, {gameData}) => {
       return await Game.findByIdAndUpdate(gameData._id, gameData, { new: true });
+
     },
     deleteGame: async (parent, { _id }) => {
       return await Game.findByIdAndDelete(_id);
