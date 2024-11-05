@@ -1,3 +1,6 @@
+//just a template for the game, not the actual game
+
+
 import React, { useState } from "react";
 
 const BOARD_SIZE = 10;
@@ -67,5 +70,5 @@ return (
 );
 };
 
-// just a board with a ship on it
+
 export default Battleship;
