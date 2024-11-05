@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 import './Tictactoe.css';
-
 
 function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }) {
   const [board, setBoard] = useState(defaultBoard);
   const [xIsNext, setXIsNext] = useState(defaultXIsNext);
+  const [socket, setSocket] = useState(null);
+  const [gameId, setGameId] = useState(null);
+  const [playerSymbol, setPlayerSymbol] = useState(null);
+  const [isYourTurn, setIsYourTurn] = useState(false);
+
+  useEffect(() => {
+    // Connect to websocket server
+    const newSocket = io('/socket.io');
+    setSocket(newSocket);
+
+    // Listen for game events
+    newSocket.on('gameJoined', ({ gameId, symbol }) => {
+      setGameId(gameId);
+      setPlayerSymbol(symbol);
+      setIsYourTurn(symbol === 'X');
+    });
+
+    newSocket.on('moveMade', ({ board, nextTurn }) => {
+      setBoard(board);
+      setXIsNext(nextTurn);
+      setIsYourTurn(nextTurn ? playerSymbol === 'X' : playerSymbol === 'O');
+    });
+
+    return () => newSocket.disconnect();
+  }, []);
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -28,14 +53,19 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
   };
 
   const handleClick = (i) => {
-    if (calculateWinner(board) || board[i]) {
+    if (calculateWinner(board) || board[i] || !isYourTurn) {
       return;
     }
-    
+
     const newBoard = board.slice();
-    newBoard[i] = xIsNext ? 'X' : 'O';
-    setBoard(newBoard);
-    setXIsNext(!xIsNext);
+    newBoard[i] = playerSymbol;
+    
+    // Emit move to server
+    socket.emit('makeMove', {
+      gameId,
+      board: newBoard,
+      position: i,
+    });
   };
 
   const resetGame = () => {
@@ -48,7 +78,11 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
     ? `Winner: ${winner}`
     : board.every(square => square) 
     ? "Game is a draw!" 
-    : `Next player: ${xIsNext ? 'X' : 'O'}`;
+    : !playerSymbol 
+    ? "Waiting for opponent..."
+    : isYourTurn 
+    ? "Your turn" 
+    : "Opponent's turn";
 
   return (
     <div className="game">
@@ -85,4 +119,4 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
   );
 }
 
-export default TicTacToe;
+export { TicTacToe };

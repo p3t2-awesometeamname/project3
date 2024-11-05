@@ -44,6 +44,7 @@ function Nav() {
             <li>
                 <Link to="/about">About</Link>
             </li>
+          
         </ul>
        
       <nav>

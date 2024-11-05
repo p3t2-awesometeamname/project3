@@ -1,14 +1,12 @@
-import Jumbotron from "../components/Jumbotron";
-import TicTacToe from "../components/Tictactoe/Tictactoe";
+import Battleship from "../components/Games/Battleships/BattleShips";
+import RPS from "../components/Games/RPS/RPS";
+import { TicTacToe }from "../components/Games/Tictactoe/Tictactoe";
+
 
 const About = () => {
   return (
     <div>
-      <Jumbotron>
-        <h1>ABOUT</h1>
-        <p>All about the creators of this project</p>
-      </Jumbotron>
-      <TicTacToe />
+      <RPS />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import decode from 'jwt-decode';
+import { setContext } from '@apollo/client/link/context';
 
 class AuthService {
   getProfile() {
@@ -41,5 +42,15 @@ class AuthService {
     window.location.assign('/');
   }
 }
+
+export const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
 
 export default new AuthService();

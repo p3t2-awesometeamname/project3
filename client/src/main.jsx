@@ -8,6 +8,8 @@ import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About.jsx';
+import GameRoom from './pages/GameRoom.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
       }, {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/GameRoom',
+        element: <GameRoom />
       },
     ],
   },
