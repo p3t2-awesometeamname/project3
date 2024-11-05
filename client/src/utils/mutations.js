@@ -32,8 +32,6 @@ export const ADD_USER = gql`
   }
 `;
 
-<<<<<<< HEAD
-=======
 export const CREATE_GAME = gql`
   mutation createGame($gameData: GameInput!) {
     createGame(gameData: $gameData) {
@@ -41,6 +39,7 @@ export const CREATE_GAME = gql`
     }
   }
 `;
+
 export const UPDATE_GAME = gql`
   mutation updateGame($gameData: GameInput!) {
     updateGame(gameData: $gameData) {
@@ -48,6 +47,7 @@ export const UPDATE_GAME = gql`
     }
   }
 `;
+
 export const DELETE_GAME = gql`
   mutation deleteGame($gameData: GameInput!) {
     deleteGame(gameData: $gameData) {
@@ -55,23 +55,3 @@ export const DELETE_GAME = gql`
     }
   }
 `;
-
-
->>>>>>> 9a5502e1e72568b624b091f5814d1870bb6ba7d6
-export const UPDATE_USER = gql`
-  mutation updateUser($tictactoewins: Int, $tictactoelosses: Int) {
-    updateUser(tictactoewins: $tictactoewins, tictactoelosses: $tictactoelosses) {
-      _id
-      firstName
-      lastName
-      email
-      tictactoewins
-      tictactoelosses
-    }
-  }
-<<<<<<< HEAD
-`;
-=======
-`;
-
->>>>>>> 9a5502e1e72568b624b091f5814d1870bb6ba7d6

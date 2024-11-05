@@ -12,6 +12,11 @@ function Nav() {
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
+            <li className="mx-1">
+            <Link to="/Profile">
+              Profile
+            </Link>
+          </li>
           </li>
         </ul>
       );
