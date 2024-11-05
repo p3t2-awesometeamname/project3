@@ -1,0 +1,48 @@
+/* RPS.css */
+
+.rps-container body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.rps-container h1 {
+  text-align: center;
+  color: #333;
+}
+
+.rps-container h2 {
+  color: #555;
+}
+
+.rps-container .container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.rps-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.rps-container button:hover {
+  background-color: #0056b3;
+}
+
+.rps-container p {
+  font-size: 18px;
+  color: #333;
+}

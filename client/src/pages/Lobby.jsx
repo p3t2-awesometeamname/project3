@@ -1,6 +1,8 @@
 
 import CreateGame from "../components/CreateGame/createGame";
+
 import GameList from "../components/GameList/gamelist"
+
 
 const Lobby = () => {
   return (
