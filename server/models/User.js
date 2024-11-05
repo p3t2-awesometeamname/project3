@@ -28,6 +28,7 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'GameResult'
   }]
+
 });
 
 // set up pre-save middleware to create password

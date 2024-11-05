@@ -3,10 +3,17 @@ import { QUERY_USERS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { SET_USERS } from "../utils/actions";
+import CreateGame from "../components/CreateGame/createGame";
+import GameList from "../components/GameList/gamelist"
+
+// import useWebSocket from 'react-use-websocket';
 
 const Home = () => {
 
-    
+    // const WS_URL = 'ws://localhost:3001'
+    // useWebSocket(WS_URL,{
+    //   queryParams: {users}
+    // })
     const [state, dispatch] = useGlobalContext();
     const {data, loading} = useQuery(QUERY_USERS);
     
@@ -22,9 +29,13 @@ const Home = () => {
         return <h3>Loading...</h3>
     }
   return (
-    <div className="container">
-     <h1>HOME PROJECT 3 Made a Change changes</h1>
-     {state.users.map(user => (<div key={user.email}>{user.email}</div>))}
+    <div>
+      <div className="container">
+          <CreateGame />
+      </div>
+      <div>
+        <GameList />
+      </div>
     </div>
   );
 };
