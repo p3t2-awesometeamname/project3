@@ -1,11 +1,11 @@
-const { User } = require('../models');
+const { User, GameResult } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id);
+        const user = await User.findById(context.user._id).populate('gameResults');
         return user;
       }
 
@@ -13,6 +13,15 @@ const resolvers = {
     },
     users: async () => {
       return User.find({});
+    },
+    userById: async (parent, { _id }) => {
+      return User.findById(_id).populate('gameResults');
+    },
+    gameResults: async () => {
+      return GameResult.find({}).populate('winningPlayer losingPlayer players');
+    },
+    gameResult: async (parent, { _id }) => {
+      return GameResult.findById(_id).populate('winningPlayer losingPlayer players');
     }
   },
   Mutation: {
@@ -48,6 +57,14 @@ const resolvers = {
 
       return { token, user };
     },
+    addGameResult: async (parent, args) => {
+      const gameResult = await GameResult.create(args);
+      await User.updateMany(
+        { _id: { $in: args.players } },
+        { $push: { gameResults: gameResult._id } }
+      );
+      return gameResult.populate('winningPlayer losingPlayer players');
+    }
   },
 };
 

@@ -24,14 +24,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  tictactoewins: {
-    type: Number,
-    default: 0
-  },
-  tictactoelosses: {
-    type: Number,
-    default: 0
-  }
+  gameResults: [{
+    type: Schema.Types.ObjectId,
+    ref: 'GameResult'
+  }]
 });
 
 // set up pre-save middleware to create password
