@@ -1,14 +1,27 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import { QUERY_GAMES } from '../../utils/queries';
-
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_GAMES, UPDATE_GAME_OPPONENT } from '../../utils/queries';
+import { useNavigate } from 'react-router-dom';
 
 const GameList = () => {
     const { loading, error, data } = useQuery(QUERY_GAMES);
+    const [updateGameOpponent] = useMutation(UPDATE_GAME_OPPONENT);
+    const navigate = useNavigate();
     console.log(data);
   
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
+  
+    const handleJoinGame = async (gameId) => {
+      try {
+        await updateGameOpponent({
+          variables: { gameId }
+        });
+        navigate(`/Gameroom?game=${gameId}`);
+      } catch (err) {
+        console.error('Error joining game:', err);
+      }
+    };
   
     return (
       <div className="game-list">
@@ -19,10 +32,7 @@ const GameList = () => {
               <h3>{game.lobbyName}</h3>
               <p>{game.gamesSelection}</p>
               <p className="host">{game.hostUser.firstName}</p>
-              {/* <Link to={`/gamelobby/${game._id}`}>
-              <button>Join Game</button>
-            </Link> */}
-              <a href={`./Gameroom?game=${game._id}`} >join game</a>
+              <button onClick={() => handleJoinGame(game._id)}>Join Game</button>
             </div>
           ))}
         </div>

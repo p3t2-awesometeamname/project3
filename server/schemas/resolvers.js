@@ -72,6 +72,36 @@ const resolvers = {
     deleteGame: async (parent, { _id }) => {
       return await Game.findByIdAndDelete(_id);
     },
+    updateGameOpponent: async (parent, { gameId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      try {
+        const updatedGame = await Game.findOneAndUpdate(
+          { 
+            _id: gameId,
+            opponentUser: null // Only update if there's no opponent yet
+          },
+          {
+            $set: { opponentUser: context.user._id }
+          },
+          { 
+            new: true,
+            runValidators: true 
+          }
+        ).populate('hostUser opponentUser');
+
+        if (!updatedGame) {
+          throw new Error('Game not found or already has an opponent');
+        }
+
+        return updatedGame;
+      } catch (err) {
+        console.error('Error updating game:', err);
+        throw new Error('Failed to update game');
+      }
+    }
    },
 };
 

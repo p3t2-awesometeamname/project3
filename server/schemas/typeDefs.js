@@ -50,6 +50,7 @@ const typeDefs = `
     createGame(gameData: GameInput!): Game
     updateGame(_id: ID!, gameData: GameInput!): Game
     deleteGame(_id: ID!): Game
+    updateGameOpponent(gameId: ID!): Game
   }
 `
 

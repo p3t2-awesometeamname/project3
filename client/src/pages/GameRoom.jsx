@@ -4,6 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries'; 
 import { QUERY_USERS } from '../utils/queries';
+import { TicTacToe } from '../components/Games/Tictactoe/Tictactoe';
 //import { Selection } from '../components/Games/Selection';
 const GameRoom = () => {
   
@@ -55,27 +56,18 @@ const GameRoom = () => {
   return (
     <div>
       <h1>Game Room: {game.lobbyName}</h1>
-      <div>
-        <p>Game ID: {game._id}</p>
+      <h2>Game Selection: {game.gameSelection}</h2>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-evenly', 
+        alignItems: 'center', 
+        width: '100%' 
+      }}>
+        <h2 style={{color: 'green'}}>{game.hostUser.firstName}</h2>
+        <h2>vs</h2>
+        <h2 style={{color: 'red'}}>{game.opponentUser.firstName}</h2> 
       </div>
-      
-      <input 
-        type="text"
-        value={opponentUser}
-        onChange={(e) => setOpponentUser(e.target.value)}
-        placeholder='Opponent User'
-      />
-      <button onClick={addOpponent}>Add User</button>
-      <button>Start Game</button>
-
-      <div>
-        <h3>Opponents:</h3>
-        <ul>
-          {opponentUsers.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul>
-      </div>
+      <TicTacToe />
     </div>
   );
 };
