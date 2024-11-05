@@ -4,6 +4,8 @@ import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { SET_USERS } from "../utils/actions";
 import CreateGame from "../components/CreateGame/createGame";
+import GameList from "../components/GameList/gamelist"
+
 // import useWebSocket from 'react-use-websocket';
 
 const Home = () => {
@@ -27,10 +29,13 @@ const Home = () => {
         return <h3>Loading...</h3>
     }
   return (
-
-    <div className="container">
-        <CreateGame />
-
+    <div>
+      <div className="container">
+          <CreateGame />
+      </div>
+      <div>
+        <GameList />
+      </div>
     </div>
   );
 };
