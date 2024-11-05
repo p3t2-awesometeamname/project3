@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './RPS.css';
 
 const RPS = () => {
   const [user1Choice, setUser1Choice] = useState('');

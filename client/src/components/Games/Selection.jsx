@@ -1,7 +1,7 @@
 import { TicTacToe } from './Tictactoe/Tictactoe';
 //import { Warships } from './Warships';
 //import { ConnectFour } from './ConnectFour';
-
+import {RPS} from './RPS/RPS';
 
 const Selection = ({ gameSelection }) => {
   const renderGame = () => {
@@ -12,6 +12,8 @@ const Selection = ({ gameSelection }) => {
         return <Warships />;
       case 'ConnectFour':
         return <ConnectFour />;
+        case 'RPS':
+          return <RPS />;
       default:
         return <div>Please select a game</div>;
     }
