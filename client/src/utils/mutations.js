@@ -47,8 +47,8 @@ export const UPDATE_GAME = gql`
   }
 `;
 export const DELETE_GAME = gql`
-  mutation deleteGame($gameData: GameInput!) {
-    deleteGame(gameData: $gameData) {
+  mutation DeleteGame($_id: ID!) {
+    deleteGame(_id: $_id) {
       _id
     }
   }

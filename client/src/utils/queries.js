@@ -77,6 +77,30 @@ export const QUERY_GAMES = gql`
         firstName
         lastName
       }
+      opponentUser {
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const UPDATE_GAME_OPPONENT = gql`
+  mutation UpdateGameOpponent($gameId: ID!) {
+    updateGameOpponent(gameId: $gameId) {
+      _id
+      lobbyName
+      gamesSelection
+      hostUser {
+        _id
+        firstName
+        lastName
+      }
+      opponentUser {
+        _id
+        firstName
+        lastName
+      }
     }
   }
 `;

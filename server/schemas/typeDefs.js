@@ -37,7 +37,9 @@ const typeDefs = `
   type Query {
     user: User
     users: [User]
+
     game(id: ID!): Game
+
     games: [Game]
   }
 
@@ -50,6 +52,7 @@ const typeDefs = `
     createGame(gameData: GameInput!): Game
     updateGame(_id: ID!, gameData: GameInput!): Game
     deleteGame(_id: ID!): Game
+    updateGameOpponent(gameId: ID!): Game
   }
 `
 
