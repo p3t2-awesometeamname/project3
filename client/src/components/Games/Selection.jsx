@@ -20,6 +20,8 @@ const Selection = ({ gameSelection }) => {
         return <RPS />;
       case 'ConnectFour':
         return <ConnectFour />;
+        case 'RPS':
+          return <RPS />;
       default:
         return <div>Please select a game</div>;
     }
