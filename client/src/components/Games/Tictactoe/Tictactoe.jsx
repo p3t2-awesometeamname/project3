@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
 import './Tictactoe.css';
 
 function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }) {
   const [board, setBoard] = useState(defaultBoard);
   const [xIsNext, setXIsNext] = useState(defaultXIsNext);
-  const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [playerSymbol, setPlayerSymbol] = useState(null);
   const [isYourTurn, setIsYourTurn] = useState(false);
 
   useEffect(() => {
-    // Connect to websocket server
-    const newSocket = io('/socket.io');
-    setSocket(newSocket);
+    // Initial game join
+    fetch('/api/game/join')
+      .then(res => res.json())
+      .then(({ gameId, symbol }) => {
+        setGameId(gameId);
+        setPlayerSymbol(symbol);
+        setIsYourTurn(symbol === 'X');
+      });
 
-    // Listen for game events
-    newSocket.on('gameJoined', ({ gameId, symbol }) => {
-      setGameId(gameId);
-      setPlayerSymbol(symbol);
-      setIsYourTurn(symbol === 'X');
-    });
+    // Set up polling interval
+    const pollInterval = setInterval(() => {
+      if (gameId) {
+        fetch(`/api/game/${gameId}/state`)
+          .then(res => res.json())
+          .then(({ board, nextTurn }) => {
+            setBoard(board);
+            setXIsNext(nextTurn);
+            setIsYourTurn(nextTurn ? playerSymbol === 'X' : playerSymbol === 'O');
+          });
+      }
+    }, 1000); // Poll every second
 
-    newSocket.on('moveMade', ({ board, nextTurn }) => {
-      setBoard(board);
-      setXIsNext(nextTurn);
-      setIsYourTurn(nextTurn ? playerSymbol === 'X' : playerSymbol === 'O');
-    });
-
-    return () => newSocket.disconnect();
-  }, []);
+    return () => clearInterval(pollInterval);
+  }, [gameId, playerSymbol]);
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -60,11 +63,16 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
     const newBoard = board.slice();
     newBoard[i] = playerSymbol;
     
-    // Emit move to server
-    socket.emit('makeMove', {
-      gameId,
-      board: newBoard,
-      position: i,
+    // Send move to server
+    fetch(`/api/game/${gameId}/move`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        board: newBoard,
+        position: i,
+      }),
     });
   };
 
@@ -74,9 +82,11 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
   };
 
   const winner = calculateWinner(board);
+  const isDraw = board.every(square => square);
+  const isGameOver = winner || isDraw;
   const status = winner 
     ? `Winner: ${winner}`
-    : board.every(square => square) 
+    : isDraw
     ? "Game is a draw!" 
     : !playerSymbol 
     ? "Waiting for opponent..."
@@ -98,9 +108,11 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
           </button>
         ))}
       </div>
-      <button className="reset" onClick={resetGame}>
-        Reset Game
-      </button>
+      {isGameOver && (
+        <button className="reset" onClick={resetGame}>
+          Reset Game
+        </button>
+      )}
 
       <style >{`
         .game {

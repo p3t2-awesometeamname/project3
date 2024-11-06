@@ -40,6 +40,7 @@ export const CREATE_GAME = gql`
     }
   }
 `;
+
 export const UPDATE_GAME = gql`
   mutation updateGame($gameData: GameInput!) {
     updateGame(gameData: $gameData) {
@@ -47,12 +48,14 @@ export const UPDATE_GAME = gql`
     }
   }
 `;
+
 export const DELETE_GAME = gql`
   mutation DeleteGame($_id: ID!) {
     deleteGame(_id: $_id) {
       _id
     }
   }
+
 `;
 
 

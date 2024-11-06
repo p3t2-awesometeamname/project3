@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { SET_USERS } from "../utils/actions";
 import CreateGame from "../components/CreateGame/createGame";
 import GameList from "../components/GameList/gamelist"
+import GameHistory from "../components/GameHistory/GameHistory";
 
 // import useWebSocket from 'react-use-websocket';
 
@@ -35,6 +36,9 @@ const Home = () => {
       </div>
       <div>
         <GameList />
+      </div>
+      <div>
+        <GameHistory />
       </div>
     </div>
   );

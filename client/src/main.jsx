@@ -9,7 +9,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About.jsx';
 import GameRoom from './pages/GameRoom.jsx';
-
+import GameDetail from './pages/GameDetail.jsx'; // Import the new GameDetail component
+import Profile from './pages/Profile.jsx'; // Import the new Profile component
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: '/GameRoom',
         element: <GameRoom />
+      },
+      {
+        path: '/GameDetail/:id', 
+        element: <GameDetail />
+      },
+      {
+        path: '/Profile/', 
+        element: <Profile />
       },
     ],
   },
