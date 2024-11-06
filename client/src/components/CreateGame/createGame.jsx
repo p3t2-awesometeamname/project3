@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './CreateGame.css';
+import './createGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
 import  AuthServices   from '../../utils/auth';
@@ -19,27 +19,38 @@ const CreateGame = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(AuthServices.getProfile().data)
-    console.log(`Lobby Name: ${lobbyName}, Game Type: ${gameType}`);
-    // Add logic to start the game
-    const mutationResponse = await createGame({
+    try {
+      console.log('Starting game creation...');
+      const userData = AuthServices.getProfile().data;
+      console.log('User data:', userData);
+
+      const mutationResponse = await createGame({
         variables: {
           gameData: {
-          hostUser: AuthServices.getProfile().data,
-          opponentUser: null,
-          gamesSelection: gameType,
-          lobbyName: lobbyName,
+            hostUser: userData,
+            opponentUser: null,
+            gamesSelection: gameType,
+            lobbyName: lobbyName,
           }
         },
       });
-     //START GAME LOGIC
 
-      console.log(mutationResponse);
+      console.log('Mutation response:', mutationResponse);
 
-
-    // Clear the form1
-    setLobbyName('');
-    setGameType('tic-tac-toe');
+      if (mutationResponse?.data?.createGame) {
+        const gameId = mutationResponse.data.createGame._id;
+        console.log('Game ID:', gameId);
+        
+        window.location.replace(`/Gameroom?game=${gameId}`);
+        
+        setLobbyName('');
+        setGameType('tic-tac-toe');
+      } else {
+        console.error('Invalid mutation response structure:', mutationResponse);
+      }
+    } catch (error) {
+      console.error('Error creating game:', error);
+    }
   };
 
   return (
@@ -55,7 +66,7 @@ const CreateGame = () => {
           <input
             type="radio"
             value="tic-tac-toe"
-            checked={gameType === 'tic-tac-toe'}
+            checked={gameType === 'tictactoe'}
             onChange={handleGameTypeChange}
           />
           Tic Tac Toe
@@ -68,6 +79,15 @@ const CreateGame = () => {
             onChange={handleGameTypeChange}
           />
           Connect Four
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="rock-paper-scissors"
+            checked={gameType === 'rock-paper-scissors'}
+            onChange={handleGameTypeChange}
+          />
+          RPS
         </label>
       </div>
       <button type="submit">Start Game</button>

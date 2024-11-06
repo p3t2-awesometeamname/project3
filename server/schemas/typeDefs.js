@@ -5,7 +5,6 @@ const typeDefs = `
     lastName: String
     email: String
     gameResults: [GameResult]
-
   }
     
   type Game {
@@ -52,6 +51,7 @@ const typeDefs = `
     gameResults: [GameResult]
     gameResult(_id: ID!): GameResult
     game(id: ID!): Game
+
     games: [Game]
   }
 
