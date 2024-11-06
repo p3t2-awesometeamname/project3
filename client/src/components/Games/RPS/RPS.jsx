@@ -1,48 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './RPS.css';
-import { io } from 'socket.io-client';
 
 const RPS = () => {
   const [user1Choice, setUser1Choice] = useState('');
   const [opponentChoice, setOpponentChoice] = useState('');
   const [result, setResult] = useState('');
-  const [gameId, setGameId] = useState(null);
-  const [socket, setSocket] = useState(null);
   const [user1Score, setUser1Score] = useState(0);
   const [opponentScore, setOpponentScore] = useState(0);
   const [round, setRound] = useState(1);
   const [isHost, setIsHost] = useState(true); // Assuming the initial user is the host
 
-  useEffect(() => {
-    // Connect to websocket server
-    const newSocket = io('/socket.io');
-    setSocket(newSocket);
-
-    // Listen for game events
-    newSocket.on('gameJoined', ({ gameId, user2 }) => {
-      setGameId(gameId);
-      setIsHost(user2 !== ''); // If user2 is not empty, the current user is the host
-    });
-
-    newSocket.on('moveMade', ({ user1Choice, opponentChoice }) => {
-      setUser1Choice(user1Choice);
-      setOpponentChoice(opponentChoice);
-      determineWinner(user1Choice, opponentChoice);
-    });
-
-    return () => newSocket.disconnect();
-  }, []);
-
   const choices = ['rock', 'paper', 'scissors'];
 
   const handleUser1Click = (choice) => {
     setUser1Choice(choice);
-    socket.emit('makeMove', { gameId, user1Choice: choice });
+    if (opponentChoice) {
+      determineWinner(choice, opponentChoice);
+    }
   };
 
   const handleOpponentClick = (choice) => {
     setOpponentChoice(choice);
-    socket.emit('makeMove', { gameId, opponentChoice: choice });
+    if (user1Choice) {
+      determineWinner(user1Choice, choice);
+    }
   };
 
   const determineWinner = (user1, opponent) => {
