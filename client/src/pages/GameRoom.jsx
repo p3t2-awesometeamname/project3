@@ -8,7 +8,7 @@ import { TicTacToe } from '../components/Games/Tictactoe/Tictactoe';
 import { useMutation } from '@apollo/client';
 import { DELETE_GAME, UPDATE_GAME } from '../utils/mutations';
 import Auth from '../utils/auth';
-//import { Selection } from '../components/Games/Selection';
+import { Selection } from '../components/Games/Selection';
 const GameRoom = () => {
   // 1. All hooks must be at the top
   const [opponentUsers, setOpponent] = useState([]);
@@ -147,7 +147,7 @@ const GameRoom = () => {
           {game.opponentUser ? game.opponentUser.firstName : 'Waiting for opponent...'}
         </h2> 
       </div>
-      <TicTacToe />
+      <Selection ID={gameParam} />
        <button onClick={handleExitGame}>Exit Game</button>
     </div>
   );

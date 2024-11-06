@@ -32,6 +32,7 @@ export const ADD_USER = gql`
   }
 `;
 
+
 export const CREATE_GAME = gql`
   mutation createGame($gameData: GameInput!) {
     createGame(gameData: $gameData) {
