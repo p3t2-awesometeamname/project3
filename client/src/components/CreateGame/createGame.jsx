@@ -66,7 +66,7 @@ const CreateGame = () => {
           <input
             type="radio"
             value="tic-tac-toe"
-            checked={gameType === 'tic-tac-toe'}
+            checked={gameType === 'tictactoe'}
             onChange={handleGameTypeChange}
           />
           Tic Tac Toe
