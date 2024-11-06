@@ -37,6 +37,11 @@ export const QUERY_GAME_RESULTS = gql`
         firstName
         lastName
       }
+      players {
+      _id
+      firstName
+      lastName
+      }
       draw
       date
       additionalInfo
