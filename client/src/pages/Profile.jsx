@@ -16,10 +16,20 @@ const Profile = () => {
   const user = Auth.getProfile();
   const userId = user.data._id;
 
+
+  //(result.winningPlayer === null || result.losingPlayer === null) ? (result.draw && result.players.some(player => player._id === userId)) : (result.winningPlayer._id === userId || result.losingPlayer._id === userId || result.players.some(player => player._id === userId))//
   // Filter game results for the logged-in user
   const userGameResults = gameResults.filter(
-    (result) => result.winningPlayer._id === userId || result.losingPlayer._id === userId || result.players.some(player => player._id === userId)
+    (result) => 
+      (result.winningPlayer === null || result.losingPlayer === null) ? 
+      (result.draw && result.players.some(player => player._id === userId)) : 
+      (result.winningPlayer._id === userId || result.losingPlayer._id === userId || result.players.some(player => player._id === userId))
   );
+     
+  
+     
+  
+  ;
 
   return (
     <div className="profile-container">
@@ -32,12 +42,14 @@ const Profile = () => {
                 <p>Game Type: {result.gameType}</p>
                 <p>Players:</p>
                 <ul>
-                {result.players && result.players.map(player => (
+                  {result.players && result.players.map(player => (
                     <li key={player._id}>{player.firstName} {player.lastName}</li>
                   ))}
                 </ul>
-                
-             
+                <p>Outcome:</p>
+                <p>
+                  {result.draw ? 'Draw' : (result.winningPlayer._id === userId ? 'You won!' : 'You lost!')}
+                </p>
               </div>
             </Link>
           </li>
