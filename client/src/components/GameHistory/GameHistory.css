@@ -1,39 +1,64 @@
+@import '../../vars.css';
+
 .game-history {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--color-secondary); /* Different background color */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 600px;
+  overflow: hidden;
+  color: var(--color-text);
 }
 
-.game-history h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.game-history-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-secondary);
+  z-index: 1;
 }
 
-.game-history-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+.game-history-body {
+  max-height: 550px; /* Adjust height as needed */
+  overflow-y: auto;
 }
 
-.game-history-card {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  transition: transform 0.3s;
-
+.game-history-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.game-history-card:hover {
-  transform: translateY(-5px);
+.table-header, .table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid var(--color-primary);
 }
 
-.game-history-content p {
-  margin: 5px 0;
+.table-header {
+  background-color: var(--color-primary);
+  font-weight: bold;
 }
 
-p {
-  color: blue;
+.table-cell {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  color: var(--color-text); /* Text color white */
+}
+
+.table-row:hover {
+  background-color: var(--color-tertiary);
+}
+
+.table-row a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.table-row a:hover, .table-row a:focus, .table-row a:active {
+  text-decoration: none; /* Ensure no underline on hover, focus, or active */
+}
+
+.table-header .table-cell {
+  cursor: pointer;
 }

@@ -1,17 +1,17 @@
+@import '../vars.css';
+
 .about-container {
   text-align: center;
   padding: 20px;
 }
-
 .developers-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .developer-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-dark);
   border-radius: 8px;
   padding: 20px;
   margin: 10px;
@@ -19,39 +19,32 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
 .developer-image {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-bottom: 10px;
 }
-
 .about-container h1 {
-  font-family: 'Roboto', sans-serif;
-  color: #333;
+  font-family: var(--font-sans);
+  color: var(--color-primary);
   margin-bottom: 20px;
   font-size: 75px;
 }
-
 .developer-card {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease-in-out forwards;
 }
-
 .developer-card:nth-child(1) {
   animation-delay: 0.2s;
 }
-
 .developer-card:nth-child(2) {
   animation-delay: 0.4s;
 }
-
 .developer-card:nth-child(3) {
   animation-delay: 0.6s;
 }
-
 @keyframes fadeInUp {
   to {
     opacity: 1;
