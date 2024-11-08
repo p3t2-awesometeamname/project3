@@ -37,14 +37,29 @@ export const CREATE_GAME = gql`
   mutation createGame($gameData: GameInput!) {
     createGame(gameData: $gameData) {
       _id
+      gameStatus
     }
   }
 `;
 
 export const UPDATE_GAME = gql`
-  mutation updateGame($gameData: GameInput!) {
-    updateGame(gameData: $gameData) {
+  mutation UpdateGame($_id: ID!, $gameData: GameInput!) {
+    updateGame(_id: $_id, gameData: $gameData) {
       _id
+      lobbyName
+      gamesSelection
+      hostUser {
+        _id
+        firstName
+        email
+      }
+      opponentUser {
+        _id
+        firstName
+        email
+      }
+      gameStatus
+      gameBoard
     }
   }
 `;

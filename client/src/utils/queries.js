@@ -89,6 +89,8 @@ export const QUERY_GAME = gql`
         lastName
         email
       }
+      gameStatus
+      gameBoard
     }
   }
 `;

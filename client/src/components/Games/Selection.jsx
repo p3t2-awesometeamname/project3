@@ -28,17 +28,18 @@ export const Selection = ({ ID }) => {
     
     switch (gameSelection?.toLowerCase()) {
       case 'tic-tac-toe':
-        return <TicTacToe />;
+        return <TicTacToe game={data.game} />;
       case 'warships':
-        return <Warships />;
+        return <Warships game={data.game} />;
       case 'rps':
-        return <RPS />;
+        return <RPS game={data.game} />;
       case 'connect-four':
-        return <ConnectFour />;
-        case 'RPS':
-          return <RPS />;
+        return <ConnectFour game={data.game} />;
+      case 'RPS':
+        return <RPS game={data.game} />;
+
       default:
-        return <div>Please select a game (Selection: {gameSelection})</div>;
+        return <div>No Game Selected</div>;
     }
   };
 

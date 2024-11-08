@@ -1,38 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import './Tictactoe.css';
+import { useMutation, useQuery } from '@apollo/client';
+import { UPDATE_GAME } from '../../../utils/mutations';
+import { QUERY_GAME } from '../../../utils/queries';
+import Auth from '../../../utils/auth';
 
-function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }) {
-  const [board, setBoard] = useState(defaultBoard);
-  const [xIsNext, setXIsNext] = useState(defaultXIsNext);
-  const [gameId, setGameId] = useState(null);
-  const [playerSymbol, setPlayerSymbol] = useState(null);
+function TicTacToe({ game }) {
+  // Initialize board safely
+  const initializeBoard = (gameBoard) => {
+    if (!gameBoard) return Array(9).fill(null);
+    if (Array.isArray(gameBoard)) return gameBoard;
+    try {
+      return JSON.parse(gameBoard);
+    } catch {
+      return Array(9).fill(null);
+    }
+  };
+
+  const [board, setBoard] = useState(initializeBoard(game?.gameBoard));
+  const [gameStatus, setGameStatus] = useState(game?.gameStatus || "waiting");
   const [isYourTurn, setIsYourTurn] = useState(false);
+  const [playerSymbol, setPlayerSymbol] = useState(null);
+  const [updateGame] = useMutation(UPDATE_GAME);
 
+  // Add polling query using QUERY_GAME
+  const { data: gameData, loading } = useQuery(QUERY_GAME, {
+    variables: { id: game._id },
+    pollInterval: 1000,
+    skip: !game?._id,
+    fetchPolicy: 'no-cache',
+    onError: (error) => console.error('Polling error:', error)
+  });
+
+  // Update local state when new data comes in
   useEffect(() => {
-    // Initial game join
-    fetch('/api/game/join')
-      .then(res => res.json())
-      .then(({ gameId, symbol }) => {
-        setGameId(gameId);
-        setPlayerSymbol(symbol);
-        setIsYourTurn(symbol === 'X');
-      });
-
-    // Set up polling interval
-    const pollInterval = setInterval(() => {
-      if (gameId) {
-        fetch(`/api/game/${gameId}/state`)
-          .then(res => res.json())
-          .then(({ board, nextTurn }) => {
-            setBoard(board);
-            setXIsNext(nextTurn);
-            setIsYourTurn(nextTurn ? playerSymbol === 'X' : playerSymbol === 'O');
-          });
+    if (gameData?.game) {
+      try {
+        // Initialize gameBoard safely
+        const gameBoard = initializeBoard(gameData.game.gameBoard);
+        
+        const currentUserId = Auth.getProfile().data._id;
+        const isHost = gameData.game.hostUser?._id === currentUserId;
+        const isOpponent = gameData.game.opponentUser?._id === currentUserId;
+        
+        setBoard(gameBoard);
+        setGameStatus(gameData.game.gameStatus);
+        setPlayerSymbol(isHost ? 'X' : isOpponent ? 'O' : null);
+        
+        // Calculate turns
+        const xCount = gameBoard.filter(cell => cell === 'X').length;
+        const oCount = gameBoard.filter(cell => cell === 'O').length;
+        const isXTurn = xCount === oCount;
+        setIsYourTurn((isHost && isXTurn) || (isOpponent && !isXTurn));
+      } catch (error) {
+        console.error('Error processing game data:', error);
       }
-    }, 1000); // Poll every second
-
-    return () => clearInterval(pollInterval);
-  }, [gameId, playerSymbol]);
+    }
+  }, [gameData]);
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -55,35 +79,77 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
     return null;
   };
 
-  const handleClick = (i) => {
+  const handleClick = async (i) => {
     if (calculateWinner(board) || board[i] || !isYourTurn) {
       return;
     }
 
-    const newBoard = board.slice();
+    const newBoard = [...board];
     newBoard[i] = playerSymbol;
     
-    // Send move to server
-    fetch(`/api/game/${gameId}/move`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        board: newBoard,
-        position: i,
-      }),
+    console.log('Move made:', {
+      position: i,
+      symbol: playerSymbol,
+      newBoard,
+      nullSquares: newBoard.filter(square => square === null).length
     });
+
+    const variables = {
+      _id: game._id,
+      gameData: {
+        gameBoard: newBoard,
+        gameStatus: 'in_progress',
+        lobbyName: game.lobbyName,
+        gamesSelection: game.gamesSelection
+      }
+    };
+
+    try {
+      const response = await updateGame({
+        variables
+      });
+      
+      console.log('Server response:', response);
+      setBoard(newBoard);
+      setIsYourTurn(false);
+    } catch (err) {
+      console.error('Error updating game:', err);
+    }
   };
 
-  const resetGame = () => {
-    setBoard(Array(9).fill(null));
-    setXIsNext(true);
+  const resetGame = async () => {
+    try {
+      await updateGame({
+        variables: {
+          _id: game._id,
+          gameData: {
+            gameBoard: JSON.stringify(Array(9).fill(null)),
+            gameStatus: 'in_progress',
+            lobbyName: game.lobbyName,
+            gamesSelection: game.gamesSelection
+          }
+        }
+      });
+      setBoard(Array(9).fill(null));
+      setGameStatus('in_progress');
+    } catch (err) {
+      console.error('Error updating game:', err);
+    }
   };
 
   const winner = calculateWinner(board);
-  const isDraw = board.every(square => square);
+  const isDraw = !winner && board.every(square => square !== null);
   const isGameOver = winner || isDraw;
+
+  // Add debugging logs
+  console.log('Game State:', {
+    board,
+    winner,
+    isDraw,
+    isGameOver,
+    nullCount: board.filter(square => square === null).length
+  });
+
   const status = winner 
     ? `Winner: ${winner}`
     : isDraw
@@ -109,12 +175,19 @@ function TicTacToe({ defaultBoard = Array(9).fill(null), defaultXIsNext = true }
         ))}
       </div>
       {isGameOver && (
-        <button className="reset" onClick={resetGame}>
-          Reset Game
+        <button className="reset" onClick={() => resetGame()}>
+          Start Game
         </button>
       )}
+      
+      {/* Add visual debug info */}
+      <div style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>
+        <pre>
+          Board: {JSON.stringify(board, null, 2)}
+        </pre>
+      </div>
 
-      <style >{`
+      <style>{`
         .game {
           display: flex;
           flex-direction: column;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GAMES, UPDATE_GAME_OPPONENT } from '../../utils/queries';
 import { useNavigate } from 'react-router-dom';
+import './GameList.css';
 import Auth from '../../utils/auth';
 
 const GameList = () => {
@@ -39,8 +40,7 @@ const GameList = () => {
   
     return (
       <div className="game-list">
-        <h2>Available Games</h2>
-        {console.log('Games data:', data.games)}
+
         <div className="game-grid">
           {data.games
             .filter(game => {
@@ -61,4 +61,3 @@ const GameList = () => {
   };
   
   export default GameList;
-  

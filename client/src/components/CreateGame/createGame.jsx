@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './createGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
-import  AuthServices   from '../../utils/auth';
+import AuthServices from '../../utils/auth';
 
 const CreateGame = () => {
   const [lobbyName, setLobbyName] = useState('');
@@ -36,6 +36,7 @@ const CreateGame = () => {
       });
 
       console.log('Mutation response:', mutationResponse);
+
 
       if (mutationResponse?.data?.createGame) {
         const gameId = mutationResponse.data.createGame._id;

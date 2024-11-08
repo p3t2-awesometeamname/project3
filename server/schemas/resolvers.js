@@ -75,9 +75,29 @@ const resolvers = {
 
       return await Game.create(gameData);
     },
-    updateGame: async (parent, { gameData }) => {
-      return await Game.findByIdAndUpdate(gameData._id, gameData, { new: true });
+    updateGame: async (parent, { _id, gameData }) => {
+      try {
+        const updatedGame = await Game.findByIdAndUpdate(
+          _id,
+          { 
+            $set: {
+              gameBoard: gameData.gameBoard, // Store as array
+              gameStatus: gameData.gameStatus,
+              lobbyName: gameData.lobbyName,
+              gamesSelection: gameData.gamesSelection
+            }
+          },
+          { 
+            new: true,
+            runValidators: true
+          }
+        ).populate('hostUser opponentUser');
 
+        return updatedGame;
+      } catch (err) {
+        console.error('Update game error:', err);
+        throw new Error('Failed to update game');
+      }
     },
     deleteGame: async (parent, { _id }) => {
       return await Game.findByIdAndDelete(_id);
