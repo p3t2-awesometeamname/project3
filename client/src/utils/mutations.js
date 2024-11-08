@@ -32,6 +32,7 @@ export const ADD_USER = gql`
   }
 `;
 
+
 export const CREATE_GAME = gql`
   mutation createGame($gameData: GameInput!) {
     createGame(gameData: $gameData) {
@@ -49,9 +50,25 @@ export const UPDATE_GAME = gql`
 `;
 
 export const DELETE_GAME = gql`
-  mutation deleteGame($gameData: GameInput!) {
-    deleteGame(gameData: $gameData) {
+  mutation DeleteGame($_id: ID!) {
+    deleteGame(_id: $_id) {
       _id
     }
   }
+
 `;
+
+
+export const UPDATE_USER = gql`
+  mutation updateUser($tictactoewins: Int, $tictactoelosses: Int) {
+    updateUser(tictactoewins: $tictactoewins, tictactoelosses: $tictactoelosses) {
+      _id
+      firstName
+      lastName
+      email
+      tictactoewins
+      tictactoelosses
+    }
+  }
+`;
+
