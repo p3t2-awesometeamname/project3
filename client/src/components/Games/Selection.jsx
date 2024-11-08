@@ -1,7 +1,7 @@
 import { TicTacToe } from './Tictactoe/Tictactoe';
 //import { RPS } from './RPS/RPS';
 //import { Warships } from './Warships';
-//import { ConnectFour } from './ConnectFour';
+import { ConnectFour } from './ConnectFour/ConnectFour';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../../utils/queries';
 
