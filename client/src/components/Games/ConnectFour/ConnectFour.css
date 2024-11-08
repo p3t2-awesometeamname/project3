@@ -1,0 +1,49 @@
+
+.connect-four {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(7, 60px);
+  grid-gap: 5px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cell.red {
+  background-color: red;
+}
+
+.cell.yellow {
+  background-color: yellow;
+}
+
+.cell:hover {
+  opacity: 0.8;
+}
+
+.header {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 18px;
+}

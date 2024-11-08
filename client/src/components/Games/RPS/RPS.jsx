@@ -8,7 +8,7 @@ const RPS = () => {
   const [user1Score, setUser1Score] = useState(0);
   const [opponentScore, setOpponentScore] = useState(0);
   const [round, setRound] = useState(1);
-  const [isHost, setIsHost] = useState(true); // Assuming the initial user is the host
+  const [isHost, setIsHost] = useState(true); 
 
   const choices = ['rock', 'paper', 'scissors'];
 
@@ -27,19 +27,21 @@ const RPS = () => {
   };
 
   const determineWinner = (user1, opponent) => {
+    let newResult = '';
     if (user1 === opponent) {
-      setResult('It\'s a tie!');
+      newResult = 'It\'s a tie!';
     } else if (
       (user1 === 'rock' && opponent === 'scissors') ||
       (user1 === 'paper' && opponent === 'rock') ||
       (user1 === 'scissors' && opponent === 'paper')
     ) {
-      setResult('User 1 wins this round!');
+      newResult = 'User 1 wins this round!';
       setUser1Score(user1Score + 1);
     } else {
-      setResult('Opponent wins this round!');
+      newResult = 'Opponent wins this round!';
       setOpponentScore(opponentScore + 1);
     }
+    setResult(newResult);
     setRound(round + 1);
     setUser1Choice('');
     setOpponentChoice('');
