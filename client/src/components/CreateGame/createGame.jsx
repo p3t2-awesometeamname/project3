@@ -37,7 +37,6 @@ const CreateGame = () => {
 
       console.log('Mutation response:', mutationResponse);
 
-
       if (mutationResponse?.data?.createGame) {
         const gameId = mutationResponse.data.createGame._id;
         console.log('Game ID:', gameId);
@@ -62,17 +61,17 @@ const CreateGame = () => {
           <input type="text" value={lobbyName} onChange={handleLobbyNameChange} required />
         </label>
       </div>
-      <div>
-        <label>
+      <div className="radio-group">
+        <label className={gameType === 'tic-tac-toe' ? 'selected' : ''}>
           <input
             type="radio"
             value="tic-tac-toe"
-            checked={gameType === 'tictactoe'}
+            checked={gameType === 'tic-tac-toe'}
             onChange={handleGameTypeChange}
           />
           Tic Tac Toe
         </label>
-        <label>
+        <label className={gameType === 'connect-four' ? 'selected' : ''}>
           <input
             type="radio"
             value="connect-four"
@@ -81,7 +80,7 @@ const CreateGame = () => {
           />
           Connect Four
         </label>
-        <label>
+        <label className={gameType === 'rock-paper-scissors' ? 'selected' : ''}>
           <input
             type="radio"
             value="rock-paper-scissors"

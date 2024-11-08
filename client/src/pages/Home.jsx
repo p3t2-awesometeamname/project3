@@ -31,7 +31,7 @@ const Home = () => {
         </div>
         <div className="game-list-section">
           <h2>Available Games</h2>
-          <div className="scrollable-card">
+          <div className="scrollable">
             <GameList />
           </div>
         </div>

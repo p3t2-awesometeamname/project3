@@ -16,45 +16,39 @@ const Profile = () => {
   const user = Auth.getProfile();
   const userId = user.data._id;
 
-
-  //(result.winningPlayer === null || result.losingPlayer === null) ? (result.draw && result.players.some(player => player._id === userId)) : (result.winningPlayer._id === userId || result.losingPlayer._id === userId || result.players.some(player => player._id === userId))//
   // Filter game results for the logged-in user
   const userGameResults = gameResults.filter(
-    (result) => 
+    (result) =>
       (result.winningPlayer === null || result.losingPlayer === null) ? 
       (result.draw && result.players.some(player => player._id === userId)) : 
       (result.winningPlayer._id === userId || result.losingPlayer._id === userId || result.players.some(player => player._id === userId))
   );
-     
-  
-     
-  
-  ;
 
   return (
     <div className="profile-container">
-      <h1>Welcome, {user.data.firstName}!</h1>
-      <ul className="game-results-list">
+      <h1>Game History: {user.data.firstName} {user.data.lastName}</h1>
+      <div className="game-history-grid">
         {userGameResults.map((result) => (
-          <li key={result._id} className="game-result-card">
+          <div key={result._id} className="game-history-card">
             <Link to={`/GameDetail/${result._id}`}>
-              <div className="game-result-content">
-                <p>Game Type: {result.gameType}</p>
-                <p>Players:</p>
-                <ul>
-                  {result.players && result.players.map(player => (
-                    <li key={player._id}>{player.firstName} {player.lastName}</li>
-                  ))}
-                </ul>
-                <p>Outcome:</p>
-                <p>
-                  {result.draw ? 'Draw' : (result.winningPlayer._id === userId ? 'You won!' : 'You lost!')}
-                </p>
+              <div className="game-history-content">
+                <p><strong>Game Type:</strong> {result.gameType}</p>
+                {result.draw ? (
+                  <>
+                    <p><strong>Result: Draw</strong></p>
+                    <p><strong>Players:</strong> {result.players.map(player => `${player.firstName} ${player.lastName}`).join(', ')}</p>
+                  </>
+                ) : (
+                  <>
+                    <p><strong>Winning Player:</strong> {result.winningPlayer ? `${result.winningPlayer.firstName} ${result.winningPlayer.lastName}` : 'N/A'}</p>
+                    <p><strong>Losing Player:</strong> {result.losingPlayer ? `${result.losingPlayer.firstName} ${result.losingPlayer.lastName}` : 'N/A'}</p>
+                  </>
+                )}
               </div>
             </Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

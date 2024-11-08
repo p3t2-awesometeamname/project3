@@ -1,8 +1,9 @@
+import React from 'react';
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
+import './Nav.css';
 
 function Nav() {
-
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
@@ -12,11 +13,11 @@ function Nav() {
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
-            <li className="mx-1">
+          </li>
+          <li className="mx-1">
             <Link to="/Profile">
               Profile
             </Link>
-          </li>
           </li>
         </ul>
       );
@@ -45,13 +46,11 @@ function Nav() {
           PlayWise
         </Link>
       </h1>
-        <ul>
-            <li>
-                <Link to="/about">About</Link>
-            </li>
-          
-        </ul>
-       
+      <ul>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
       <nav>
         {showNavigation()}
       </nav>

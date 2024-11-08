@@ -1,11 +1,9 @@
-:root{
-  /*color*/
-  --color-text: #fff;
-  --color-primary: rgb(0, 255, 247);
-  --color-secondary: rgb(0, 166, 255);
-  --color-dark: #000;
-  --color-bg: #525967;
-
-  /*font*/
-  --font-sans: sans-serif;
-  }
+:root {
+  --color-text: #FEFDFE;
+  --color-primary: rgb(62, 56, 114); /* Neon Blue */
+  --color-secondary:#B036BE; /* Neon Pink */
+  --color-tertiary: #48c500; /* Neon Cyan */
+  --color-dark: #00aeff;
+  --color-bg:#55698f; /* Dark Background */
+  --font-sans: 'Press Start 2P', cursive; /* Arcade-style font */
+}
