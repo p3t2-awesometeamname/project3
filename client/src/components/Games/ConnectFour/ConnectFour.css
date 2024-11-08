@@ -1,4 +1,3 @@
-
 .connect-four {
   display: flex;
   flex-direction: column;
@@ -10,27 +9,27 @@
   display: grid;
   grid-template-columns: repeat(7, 60px);
   grid-gap: 5px;
-  background-color: #333;
+  background-color: blue;
   padding: 10px;
   border-radius: 10px;
+  display: inline-block;
 }
 
 .cell {
-  width: 60px;
-  height: 60px;
-  background-color: #fff;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #333;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 2px;
   cursor: pointer;
+  background-color: white;
 }
 
-.cell.red {
+.cell.Red {
   background-color: red;
 }
 
-.cell.yellow {
+.cell.Yellow {
   background-color: yellow;
 }
 
@@ -46,4 +45,8 @@
 .message {
   margin-top: 20px;
   font-size: 18px;
+}
+
+.row {
+  display: flex;
 }

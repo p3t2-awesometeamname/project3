@@ -87,12 +87,12 @@ function TicTacToe({ game }) {
     const newBoard = [...board];
     newBoard[i] = playerSymbol;
     
-    console.log('Move made:', {
-      position: i,
-      symbol: playerSymbol,
-      newBoard,
-      nullSquares: newBoard.filter(square => square === null).length
-    });
+    // console.log('Move made:', {
+    //   position: i,
+    //   symbol: playerSymbol,
+    //   newBoard,
+    //   nullSquares: newBoard.filter(square => square === null).length
+    // });
 
     const variables = {
       _id: game._id,
@@ -109,7 +109,7 @@ function TicTacToe({ game }) {
         variables
       });
       
-      console.log('Server response:', response);
+      // console.log('Server response:', response);
       setBoard(newBoard);
       setIsYourTurn(false);
     } catch (err) {
@@ -142,13 +142,13 @@ function TicTacToe({ game }) {
   const isGameOver = winner || isDraw;
 
   // Add debugging logs
-  console.log('Game State:', {
-    board,
-    winner,
-    isDraw,
-    isGameOver,
-    nullCount: board.filter(square => square === null).length
-  });
+  // console.log('Game State:', {
+  //   board,
+  //   winner,
+  //   isDraw,
+  //   isGameOver,
+  //   nullCount: board.filter(square => square === null).length
+  // });
 
   const status = winner 
     ? `Winner: ${winner}`
@@ -180,12 +180,12 @@ function TicTacToe({ game }) {
         </button>
       )}
       
-      {/* Add visual debug info */}
+      {/* Add visual debug info
       <div style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>
         <pre>
           Board: {JSON.stringify(board, null, 2)}
         </pre>
-      </div>
+      </div> */}
 
       <style>{`
         .game {
