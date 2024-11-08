@@ -37,6 +37,7 @@ export const Selection = ({ ID }) => {
         return <ConnectFour game={data.game} />;
       case 'RPS':
         return <RPS game={data.game} />;
+
       default:
         return <div>No Game Selected</div>;
     }
