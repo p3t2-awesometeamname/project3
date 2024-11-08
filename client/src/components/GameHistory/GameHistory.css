@@ -1,29 +1,39 @@
 .game-history {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .game-history h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .game-history ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .game-history li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .game-history li:last-child {
-    border-bottom: none;
-  }
-  
-  .game-history p {
-    margin: 5px 0;
-  }
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-history h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.game-history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.game-history-card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s;
+
+}
+
+.game-history-card:hover {
+  transform: translateY(-5px);
+}
+
+.game-history-content p {
+  margin: 5px 0;
+}
+
+p {
+  color: blue;
+}

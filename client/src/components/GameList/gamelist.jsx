@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GAMES, UPDATE_GAME_OPPONENT } from '../../utils/queries';
 import { useNavigate } from 'react-router-dom';
+import './GameList.css';
 
 const GameList = () => {
     const { loading, error, data } = useQuery(QUERY_GAMES);
@@ -25,7 +26,6 @@ const GameList = () => {
   
     return (
       <div className="game-list">
-        <h2>Available Games</h2>
         <div className="game-grid">
           {data.games.map((game) => (
             <div key={game._id} className="game-card">
@@ -41,4 +41,3 @@ const GameList = () => {
   };
   
   export default GameList;
-  

@@ -14,21 +14,22 @@ const GameHistory = () => {
 
   return (
     <div className="game-history">
-      <h2>Game History</h2>
-      <ul>
+      <div className="game-history-grid">
         {gameResults.map((result) => (
-          <li key={result._id}>
+          <div key={result._id} className="game-history-card">
             <Link to={`/GameDetail/${result._id}`}>
-              <p>Game Type: {result.gameType}</p>
-              <p>Winning Player: {result.winningPlayer ? `${result.winningPlayer.firstName} ${result.winningPlayer.lastName}` : 'N/A'}</p>
-              <p>Losing Player: {result.losingPlayer ? `${result.losingPlayer.firstName} ${result.losingPlayer.lastName}` : 'N/A'}</p>
-              <p>Draw: {result.draw ? 'Yes' : 'No'}</p>
-              <p>Date: {new Date(result.date).toLocaleDateString()}</p>
-              <p>Additional Info: {result.additionalInfo}</p>
+              <div className="game-history-content">
+                <p><strong>Game Type:</strong> {result.gameType}</p>
+                <p><strong>Winning Player:</strong> {result.winningPlayer ? `${result.winningPlayer.firstName} ${result.winningPlayer.lastName}` : 'N/A'}</p>
+                <p><strong>Losing Player:</strong> {result.losingPlayer ? `${result.losingPlayer.firstName} ${result.losingPlayer.lastName}` : 'N/A'}</p>
+                <p><strong>Draw:</strong> {result.draw ? 'Yes' : 'No'}</p>
+                <p><strong>Date:</strong> {new Date(result.date).toLocaleDateString()}</p>
+                <p><strong>Additional Info:</strong> {result.additionalInfo}</p>
+              </div>
             </Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

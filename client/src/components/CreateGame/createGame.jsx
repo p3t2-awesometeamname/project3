@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './CreateGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
-import  AuthServices   from '../../utils/auth';
+import AuthServices from '../../utils/auth';
 
 const CreateGame = () => {
   const [lobbyName, setLobbyName] = useState('');
@@ -36,8 +36,7 @@ const CreateGame = () => {
 
       console.log(mutationResponse);
 
-
-    // Clear the form1
+    // Clear the form
     setLobbyName('');
     setGameType('tic-tac-toe');
   };

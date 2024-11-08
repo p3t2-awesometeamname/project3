@@ -1,0 +1,52 @@
+.game-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .game-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .game-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 100%;
+  }
+  
+  .game-card h3 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .game-card p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 10px;
+  }
+  
+  .game-card button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .game-card button:hover {
+    background-color: #0056b3;
+  }

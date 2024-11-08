@@ -100,7 +100,8 @@ button {
 }
 
 button:hover {
-  opacity: .8;
+  background-color: var(--tertiary);
+  transform: translateY(-2px);
 }
 
 button[disabled] {
@@ -207,4 +208,31 @@ input:focus {
   .card {
     width: 100%;
   }
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.side-by-side {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.create-game-section,
+.game-list-section {
+  flex: 1;
+  margin: 10px;
+}
+
+.create-game-section {
+  margin-right: 20px;
+}
+
+.game-list-section {
+  margin-left: 20px;
 }
