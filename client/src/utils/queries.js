@@ -22,15 +22,54 @@ export const QUERY_USERS = gql`
 }
 `;
 
-// export const QUERY_GAME = gql`
-//   {
-//     game {
-//       _id
-//     }
-//   }
-// `;
+export const QUERY_GAME_RESULTS = gql`
+  query GetGameResults {
+    gameResults {
+      _id
+      gameType
+      winningPlayer {
+        _id
+        firstName
+        lastName
+      }
+      losingPlayer {
+        _id
+        firstName
+        lastName
+      }
+      players {
+      _id
+      firstName
+      lastName
+      }
+      draw
+      date
+      additionalInfo
+    }
+  }
+`;
 
-
+export const QUERY_GAME_RESULT = gql`
+  query GetGameResult($_id: ID!) {
+    gameResult(_id: $_id) {
+      _id
+      gameType
+      winningPlayer {
+        _id
+        firstName
+        lastName
+      }
+      losingPlayer {
+        _id
+        firstName
+        lastName
+      }
+      draw
+      date
+      additionalInfo
+    }
+  }
+`;
 
 export const QUERY_GAME = gql`
   query GetGame($id: ID!) {
@@ -50,22 +89,13 @@ export const QUERY_GAME = gql`
         lastName
         email
       }
+      gameStatus
+      gameBoard
     }
   }
 `;
 
 // Games
-
-// export const QUERY_GAMES = gql`
-//   {
-//     games {
-//       _id
-//       lobbyName
-//       hostUser
-//       gamesSelection
-//     }
-//   }
-// `;
 
 export const QUERY_GAMES = gql`
   query GetGames {

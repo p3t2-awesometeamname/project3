@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './CreateGame.css';
+import './createGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
 import  AuthServices   from '../../utils/auth';
