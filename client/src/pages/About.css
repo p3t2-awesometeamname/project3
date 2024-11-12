@@ -2,12 +2,24 @@
 
 .about-container {
   text-align: center;
+  background-color: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
 }
 .developers-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 }
 .developer-card {
   background-color: var(--color-bg);
@@ -16,8 +28,20 @@
   padding: 20px;
   margin: 10px;
   width: 300px;
+  min-height: 400px;
+  max-width: 90%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+  @media (min-width: 768px) {
+    margin: 0;
+    max-width: 300px;
+  }
 }
 .developer-image {
   width: 100px;
@@ -50,4 +74,22 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+.fa-github, .fa-envelope, .fa-globe {
+  margin-right: 5px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: block;
+  margin: 10px 0;
+}
+
+.fa-github:hover, .fa-envelope:hover, .fa-globe:hover {
+  background-color: var(--color-secondary);
+  transform: scale(1.1);
+}
+
+.fa-github:active, .fa-envelope:active, .fa-globe:active {
+  transform: scale(0.95);
 }

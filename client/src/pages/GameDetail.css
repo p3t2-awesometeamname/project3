@@ -1,0 +1,77 @@
+@import '../vars.css';
+
+
+
+@keyframes shine {
+    0% {
+      border-color: var(--color-dark);
+      box-shadow: 0 0 5px var(--color-dark);
+    }
+    50% {
+      border-color: var(--color-dark);
+      box-shadow: 0 0 20px var(--color-dark);
+    }
+    100% {
+      border-color: var(--color-dark);
+      box-shadow: 0 0 5px var(--color-dark);
+    }
+  }
+
+.game-detail-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-secondary); /* Different background color */
+  border-radius: 8px;
+  height: 50%; /* Full viewport height */
+  background-color: var(--color-bg);
+}
+
+.game-detail-card:hover{
+  animation: shine 1s infinite; /* Apply the shine animation on hover */
+}
+
+.game-detail-card {
+  padding: 20px;
+  background-color: var(--color-secondary);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  background-color: var(--color-secondary); /* Different background color */
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-left: auto;  
+  margin-right: auto;
+  max-width: 600px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.game-detail-card h2 {
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.game-detail-card p {
+  font-family: var(--font-sans);
+  margin: 10px 0;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  width: 200px;
+  margin-left: auto;  
+  margin-right: auto;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.back-button:hover {
+  background-color: var(--color-dark);
+}

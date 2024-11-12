@@ -9,7 +9,7 @@ form {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: var(--color-secondary); /* Different background color */
-  width: 60%;
+  width: 95%;
 }
 
 label {
