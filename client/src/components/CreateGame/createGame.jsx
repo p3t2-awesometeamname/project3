@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './createGame.css';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME } from '../../utils/mutations';
-import  AuthServices   from '../../utils/auth';
+import AuthServices from '../../utils/auth';
 
 const CreateGame = () => {
   const [lobbyName, setLobbyName] = useState('');
@@ -61,17 +61,17 @@ const CreateGame = () => {
           <input type="text" value={lobbyName} onChange={handleLobbyNameChange} required />
         </label>
       </div>
-      <div>
-        <label>
+      <div className="radio-group">
+        <label className={gameType === 'tic-tac-toe' ? 'selected' : ''}>
           <input
             type="radio"
             value="tic-tac-toe"
-            checked={gameType === 'tictactoe'}
+            checked={gameType === 'tic-tac-toe'}
             onChange={handleGameTypeChange}
           />
           Tic Tac Toe
         </label>
-        <label>
+        <label className={gameType === 'connect-four' ? 'selected' : ''}>
           <input
             type="radio"
             value="connect-four"
@@ -80,7 +80,7 @@ const CreateGame = () => {
           />
           Connect Four
         </label>
-        <label>
+        <label className={gameType === 'rock-paper-scissors' ? 'selected' : ''}>
           <input
             type="radio"
             value="rock-paper-scissors"

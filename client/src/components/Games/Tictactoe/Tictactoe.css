@@ -1,3 +1,4 @@
+@import '../../../vars.css';
 
 .board {
     display: grid;
@@ -6,34 +7,35 @@
     gap: 5px;
     margin: 50px auto;
     width: max-content;
-  }
-  
-  /* Style each cell */
-  .square {
+}
+
+.square {
     width: 100px;
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    background-color: #f0f0f0;
-    border: 2px solid #333;
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-dark);
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .cell:hover {
-    background-color: #ddd;
-  }
-  
-  /* Highlight the winning cells */
-  .winning-cell {
-    background-color: #ffeb3b;
-  }
-  
-  /* Style for player turns */
-  .status {
+}
+
+.cell:hover {
+    background-color: var(--color-secondary);
+}
+
+.winning-cell {
+    background-color: var(--color-primary);
+}
+
+.status {
     text-align: center;
     font-size: 1.5rem;
     margin-top: 20px;
-  }
+    background-color: #000;
+    padding: 5px;
+    color: #0f0;
+    outline: 2px solid #0f0;
+}

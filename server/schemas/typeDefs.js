@@ -13,6 +13,8 @@ const typeDefs = `
     gamesSelection: String
     hostUser: User
     opponentUser: User
+    gameStatus: String
+    gameBoard: [String]
   }
 
   type GameResult {
@@ -38,10 +40,12 @@ const typeDefs = `
   }
 
   input GameInput {
-    lobbyName: String!
-    hostUser: UserInput!
+    lobbyName: String
+    hostUser: UserInput
     opponentUser: UserInput
-    gamesSelection: String!
+    gamesSelection: String
+    gameStatus: String
+    gameBoard: [String]
   }
   
   type Query {
@@ -51,7 +55,6 @@ const typeDefs = `
     gameResults: [GameResult]
     gameResult(_id: ID!): GameResult
     game(id: ID!): Game
-
     games: [Game]
   }
 
