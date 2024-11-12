@@ -1,7 +1,9 @@
 @import "./vars.css";
 
-
 #root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ensure the root element takes up the remaining space */
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -14,9 +16,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }

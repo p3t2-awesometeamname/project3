@@ -5,7 +5,7 @@ const developers = [
   {
     name: "Chad Young",
     image: "/images/camera.jpg",
-    bio: "I’m Chad, an enigneer passionate about designing and building end-to-end web applications that are both functional and visually appealing. With expertise in front-end frameworks and back-end development.",
+    bio: "I’m Chad, an engineer passionate about designing and building end-to-end web applications that are both functional and visually appealing. With expertise in front-end frameworks and back-end development.",
     github: "https://github.com/chadyoung",
     email: "mailto:chad@example.com",
     website: "https://chadyoung.com"
@@ -52,7 +52,6 @@ const About = () => {
           </div>
         ))}
       </div>
-
     </div>
   );
 };

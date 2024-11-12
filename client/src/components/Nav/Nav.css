@@ -1,6 +1,6 @@
 @import '../../vars.css';
 
-header {
+.nav-header {
   background: var(--color-primary);
   padding: 10px;
   display: flex;
@@ -8,54 +8,39 @@ header {
   align-items: center;
 }
 
-header h1 {
+.nav-logo {
   font-family: var(--font-sans);
   color: var(--color-text);
   margin: 0;
 }
 
-header a {
+.nav-logo a {
   color: var(--color-text);
   text-decoration: none;
   font-weight: bold;
 }
 
-header a:hover {
-  text-decoration: underline;
-}
-
-nav ul {
+.nav-items {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
 }
 
-nav li {
+.nav-item {
   margin: 0 10px;
 }
 
-nav a {
+.nav-item a {
   color: var(--color-text);
   text-decoration: none;
   font-weight: bold;
 }
 
-nav a:hover {
+.nav-item a:hover {
   color: var(--color-secondary);
 }
 
-.flex-row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.px-1 {
-  padding-right: var(--spacing-one);
-  padding-left: var(--spacing-one);
-}
-
-.mx-1 {
-  margin-right: var(--spacing-one);
-  margin-left: var(--spacing-one);
+.nav-item.active a {
+  color: var(--color-tertiary);
 }
