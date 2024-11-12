@@ -9,8 +9,8 @@ const developers = [
     name: "Chad Young",
     image: chadImage,
     bio: "I’m Chad, an enigneer passionate about designing and building end-to-end web applications that are both functional and visually appealing. With expertise in front-end frameworks and back-end development.",
-    github: "https://github.com/chadyoung",
-    email: "mailto:chad@example.com",
+    github: "https://github.com/Wrandy1",
+    email: "mailto:cjyoung0420@gmail.com",
     website: "https://chadyoung.com"
   },
   {
