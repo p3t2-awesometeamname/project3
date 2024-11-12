@@ -145,11 +145,6 @@ function RPS({ game }) {
     }
   };
 
-  if (loading) return <div>Loading game...</div>;
-  if (!game) return <div>No game data available</div>;
-
-  const status = result || (isYourTurn ? 'Your turn' : 'Waiting for opponent...');
-
   return (
     <div className="container">
       <h1>Rock Paper Scissors</h1>
