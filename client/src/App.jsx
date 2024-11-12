@@ -8,13 +8,8 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import Nav from './components/Nav';
-
+import Footer from './components/Footer/Footer';
 import { GlobalProvider } from './utils/GlobalState';
-
-
-
-// import styles from './App.module.css';
-// import Game from './components/Game';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -41,8 +36,8 @@ function App() {
       <div>
         <GlobalProvider>
           <Nav />
-          
           <Outlet />
+          <Footer />
         </GlobalProvider>
       </div>
     </ApolloProvider>

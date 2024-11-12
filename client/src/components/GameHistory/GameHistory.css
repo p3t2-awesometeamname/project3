@@ -1,13 +1,35 @@
 @import '../../vars.css';
 
+@keyframes shine {
+  0% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 5px var(--color-dark);
+  }
+  50% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 20px var(--color-dark);
+  }
+  100% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 5px var(--color-dark);
+  }
+}
+
+
 .game-history {
+  margin-top: 20px;
   padding: 20px;
   background-color: var(--color-secondary); /* Different background color */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-height: 600px;
+  border: 2px solid var(--color-dark);
   overflow: hidden;
   color: var(--color-text);
+}
+
+.game-history:hover {
+  animation: shine 1s infinite; /* Apply the shine animation on hover */
 }
 
 .game-history-header {
@@ -15,6 +37,10 @@
   top: 0;
   background-color: var(--color-secondary);
   z-index: 1;
+}
+
+.game-history-section h2{
+  text-align: center;
 }
 
 .game-history-body {
