@@ -4,13 +4,14 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries'; 
 import { QUERY_USERS } from '../utils/queries';
-import { TicTacToe } from '../components/Games/Tictactoe/Tictactoe';
 import { useMutation } from '@apollo/client';
 import { DELETE_GAME, UPDATE_GAME } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { Selection } from '../components/Games/Selection';
+import './GameRoom.css';
+
 const GameRoom = () => {
-  // 1. All hooks must be at the top
+
   const [opponentUsers, setOpponent] = useState([]);
   const [opponentUser, setOpponentUser] = useState('');
   const navigate = useNavigate();
@@ -122,33 +123,32 @@ const GameRoom = () => {
   };
 
   return (
-    <div>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '20px'
-      }}>
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          <h1>Game Room: {game.lobbyName}</h1>
-        </div>
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          <h2>Game: {game.gamesSelection}</h2>
+    <div className="game-room-container">
+      <div className="game-screen">
+        <div className="crt-overlay" />
+        
+        <div className="game-content">
+          <div className="header-container">
+            <div className="header-section">
+              <h2 className="game-title">{game.gamesSelection}</h2>
+            </div>
+          </div>
+          <div className="players-container">
+            <h2 className="host-name">{game.hostUser?.firstName}</h2>
+            <h2 className="vs-text">vs</h2>
+            <h2 className="opponent-name">
+              {game.opponentUser ? game.opponentUser.firstName : 'Waiting for opponent...'}
+            </h2> 
+          </div>
+          <Selection ID={gameParam} />
+          <button 
+            onClick={handleExitGame}
+            className="exit-button"
+          >
+            Exit Game
+          </button>
         </div>
       </div>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-evenly', 
-        alignItems: 'center', 
-        width: '100%' 
-      }}>
-        <h2 style={{color: 'green'}}>{game.hostUser?.firstName}</h2>
-        <h2>vs</h2>
-        <h2 style={{color: 'red'}}>
-          {game.opponentUser ? game.opponentUser.firstName : 'Waiting for opponent...'}
-        </h2> 
-      </div>
-      <Selection ID={gameParam} />
-       <button onClick={handleExitGame}>Exit Game</button>
     </div>
   );
 };
