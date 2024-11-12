@@ -82,7 +82,7 @@ const GameRoom = () => {
           refetchQueries: ['GetGames']
         });
         console.log('Delete game response:', data);
-        navigate('/lobby');
+        navigate('/');
       } 
  
       else if (userId === game.opponentUser._id) {
@@ -111,7 +111,7 @@ const GameRoom = () => {
             }
           }
         });
-        navigate('/lobby');
+        navigate('/');
       } else {
         console.error('You are not a participant in this game');
       }
