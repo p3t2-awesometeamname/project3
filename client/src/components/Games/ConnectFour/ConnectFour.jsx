@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ConnectFour.css';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_GAME } from '../../../utils/mutations';
+import { UPDATE_GAME, ADD_GAME_RESULT } from '../../../utils/mutations';
 import { QUERY_GAME } from '../../../utils/queries';
 import Auth from '../../../utils/auth';
 
@@ -54,50 +54,92 @@ function ConnectFour({ game }) {
   const [isYourTurn, setIsYourTurn] = useState(false);
   const [playerColor, setPlayerColor] = useState(null);
   const [updateGame] = useMutation(UPDATE_GAME);
+  const [addGameResult] = useMutation(ADD_GAME_RESULT);
 
   useEffect(() => {
-    if (!gameData?.game) {
-      console.log('No game data available');
-      return;
-    }
-
-    try {
-      console.log('Raw game board from server:', gameData.game.gameBoard);
-      let parsedBoard;
-      
-      try {
-        parsedBoard = JSON.parse(gameData.game.gameBoard);
-      } catch (e) {
-        console.error('Error parsing game board:', e);
-        parsedBoard = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+    const processGameData = async () => {
+      if (!gameData?.game) {
+        console.log('No game data available');
+        return;
       }
-      
-      console.log('Parsed board:', parsedBoard);
-      
-      const currentUserId = Auth.getProfile().data._id;
-      const isHost = gameData.game.hostUser?._id === currentUserId;
-      const isOpponent = gameData.game.opponentUser?._id === currentUserId;
-      
-      setBoard(parsedBoard);
-      setGameStatus(gameData.game.gameStatus);
-      setPlayerColor(isHost ? 'Red' : isOpponent ? 'Yellow' : null);
-      
-      const redCount = parsedBoard.flat().filter((cell) => cell === 'Red').length;
-      const yellowCount = parsedBoard.flat().filter((cell) => cell === 'Yellow').length;
-      const isRedTurn = redCount === yellowCount;
-      
-      console.log('Turn calculation:', {
-        redCount,
-        yellowCount,
-        isRedTurn,
-        currentPlayer: isHost ? 'Red' : 'Yellow',
-        willSetTurnTo: (isHost && isRedTurn) || (isOpponent && !isRedTurn)
-      });
-      
-      setIsYourTurn((isHost && isRedTurn) || (isOpponent && !isRedTurn));
-    } catch (error) {
-      console.error('Error processing game data:', error);
-    }
+
+      try {
+        console.log('Raw game board from server:', gameData.game.gameBoard);
+        let parsedBoard;
+        
+        try {
+          parsedBoard = JSON.parse(gameData.game.gameBoard);
+        } catch (e) {
+          console.error('Error parsing game board:', e);
+          parsedBoard = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+        }
+        
+        console.log('Parsed board:', parsedBoard);
+        
+        const currentUserId = Auth.getProfile().data._id;
+        const isHost = gameData.game.hostUser?._id === currentUserId;
+        const isOpponent = gameData.game.opponentUser?._id === currentUserId;
+        
+        setBoard(parsedBoard);
+        setGameStatus(gameData.game.gameStatus);
+        setPlayerColor(isHost ? 'Red' : isOpponent ? 'Yellow' : null);
+        
+        const redCount = parsedBoard.flat().filter((cell) => cell === 'Red').length;
+        const yellowCount = parsedBoard.flat().filter((cell) => cell === 'Yellow').length;
+        const isRedTurn = redCount === yellowCount;
+        
+        console.log('Turn calculation:', {
+          redCount,
+          yellowCount,
+          isRedTurn,
+          currentPlayer: isHost ? 'Red' : 'Yellow',
+          willSetTurnTo: (isHost && isRedTurn) || (isOpponent && !isRedTurn)
+        });
+        
+        setIsYourTurn((isHost && isRedTurn) || (isOpponent && !isRedTurn));
+
+        const winner = calculateWinner(parsedBoard);
+        const isDraw = !winner && parsedBoard.flat().every((cell) => cell !== null);
+        
+        // Add game result if game is over
+        if ((winner || isDraw) && gameData.game.gameStatus !== 'completed') {
+          try {
+            await addGameResult({
+              variables: {
+                gameType: 'connectfour',
+                winningPlayer: winner ? (winner === 'Red' ? gameData.game.hostUser._id : gameData.game.opponentUser._id) : null,
+                losingPlayer: winner ? (winner === 'Red' ? gameData.game.opponentUser._id : gameData.game.hostUser._id) : null,
+                draw: isDraw,
+                players: [
+                  gameData.game.hostUser._id,
+                  gameData.game.opponentUser._id
+                ]
+              }
+            });
+            
+            // Only send required fields in the update
+            await updateGame({
+              variables: {
+                _id: game._id,
+                gameData: {
+                  gameBoard: JSON.stringify(parsedBoard),
+                  gameStatus: 'completed',
+                  lobbyName: game.lobbyName,
+                  gamesSelection: game.gamesSelection
+                }
+              }
+            });
+          } catch (error) {
+            console.error('Error saving game result:', error);
+          }
+        }
+
+      } catch (error) {
+        console.error('Error processing game data:', error);
+      }
+    };
+
+    processGameData();
   }, [gameData]);
 
   if (loading) return <div>Loading game...</div>;

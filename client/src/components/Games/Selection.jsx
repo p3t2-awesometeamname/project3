@@ -1,6 +1,5 @@
 import { TicTacToe } from './Tictactoe/Tictactoe';
-import { RPS } from './RPS/RPS';
-//import { Warships } from './Warships';
+import { RPS } from './RPS/RPS.jsx';
 import { ConnectFour } from './ConnectFour/ConnectFour';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../../utils/queries';
@@ -17,8 +16,6 @@ export const Selection = ({ ID }) => {
 
   console.log('Query Response:', { loading, error, data });
 
-  console.log('About to render TicTacToe component');
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -29,13 +26,10 @@ export const Selection = ({ ID }) => {
     switch (gameSelection?.toLowerCase()) {
       case 'tic-tac-toe':
         return <TicTacToe game={data.game} />;
-      case 'warships':
-        return <Warships game={data.game} />;
       case 'connect-four':
         return <ConnectFour game={data.game} />;
-      case 'RPS':
+      case 'rps':
         return <RPS game={data.game} />;
-
       default:
         return <div>No Game Selected</div>;
     }

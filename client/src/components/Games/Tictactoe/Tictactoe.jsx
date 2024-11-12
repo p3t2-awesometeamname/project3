@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Tictactoe.css';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_GAME } from '../../../utils/mutations';
+import { UPDATE_GAME, ADD_GAME_RESULT } from '../../../utils/mutations';
 import { QUERY_GAME } from '../../../utils/queries';
 import Auth from '../../../utils/auth';
 
@@ -22,6 +22,7 @@ function TicTacToe({ game }) {
   const [isYourTurn, setIsYourTurn] = useState(false);
   const [playerSymbol, setPlayerSymbol] = useState(null);
   const [updateGame] = useMutation(UPDATE_GAME);
+  const [addGameResult] = useMutation(ADD_GAME_RESULT);
 
   // Add polling query using QUERY_GAME
   const { data: gameData, loading } = useQuery(QUERY_GAME, {
@@ -34,28 +35,67 @@ function TicTacToe({ game }) {
 
   // Update local state when new data comes in
   useEffect(() => {
-    if (gameData?.game) {
-      try {
-        // Initialize gameBoard safely
-        const gameBoard = initializeBoard(gameData.game.gameBoard);
-        
-        const currentUserId = Auth.getProfile().data._id;
-        const isHost = gameData.game.hostUser?._id === currentUserId;
-        const isOpponent = gameData.game.opponentUser?._id === currentUserId;
-        
-        setBoard(gameBoard);
-        setGameStatus(gameData.game.gameStatus);
-        setPlayerSymbol(isHost ? 'X' : isOpponent ? 'O' : null);
-        
-        // Calculate turns
-        const xCount = gameBoard.filter(cell => cell === 'X').length;
-        const oCount = gameBoard.filter(cell => cell === 'O').length;
-        const isXTurn = xCount === oCount;
-        setIsYourTurn((isHost && isXTurn) || (isOpponent && !isXTurn));
-      } catch (error) {
-        console.error('Error processing game data:', error);
+    const processGameData = async () => {
+      if (gameData?.game) {
+        try {
+          // Initialize gameBoard safely
+          const gameBoard = initializeBoard(gameData.game.gameBoard);
+          
+          const currentUserId = Auth.getProfile().data._id;
+          const isHost = gameData.game.hostUser?._id === currentUserId;
+          const isOpponent = gameData.game.opponentUser?._id === currentUserId;
+          
+          setBoard(gameBoard);
+          setGameStatus(gameData.game.gameStatus);
+          setPlayerSymbol(isHost ? 'X' : isOpponent ? 'O' : null);
+          
+          // Calculate turns
+          const xCount = gameBoard.filter(cell => cell === 'X').length;
+          const oCount = gameBoard.filter(cell => cell === 'O').length;
+          const isXTurn = xCount === oCount;
+          setIsYourTurn((isHost && isXTurn) || (isOpponent && !isXTurn));
+          
+          // Check for game end and record result
+          const winner = calculateWinner(gameBoard);
+          const isDraw = !winner && gameBoard.every(square => square !== null);
+          
+          if ((winner || isDraw) && gameData.game.gameStatus !== 'completed') {
+            try {
+              await addGameResult({
+                variables: {
+                  gameType: 'tictactoe',
+                  winningPlayer: winner ? (winner === 'X' ? gameData.game.hostUser._id : gameData.game.opponentUser._id) : null,
+                  losingPlayer: winner ? (winner === 'X' ? gameData.game.opponentUser._id : gameData.game.hostUser._id) : null,
+                  draw: isDraw,
+                  players: [
+                    gameData.game.hostUser._id,
+                    gameData.game.opponentUser._id
+                  ]
+                }
+              });
+              
+              await updateGame({
+                variables: {
+                  _id: game._id,
+                  gameData: {
+                    gameBoard: JSON.stringify(gameBoard),
+                    gameStatus: 'completed',
+                    lobbyName: game.lobbyName,
+                    gamesSelection: game.gamesSelection
+                  }
+                }
+              });
+            } catch (error) {
+              console.error('Error saving game result:', error);
+            }
+          }
+        } catch (error) {
+          console.error('Error processing game data:', error);
+        }
       }
-    }
+    };
+
+    processGameData();
   }, [gameData]);
 
   const calculateWinner = (squares) => {
@@ -118,19 +158,20 @@ function TicTacToe({ game }) {
   };
 
   const resetGame = async () => {
+    const newBoard = Array(9).fill(null);
     try {
       await updateGame({
         variables: {
           _id: game._id,
           gameData: {
-            gameBoard: JSON.stringify(Array(9).fill(null)),
+            gameBoard: newBoard,
             gameStatus: 'in_progress',
             lobbyName: game.lobbyName,
             gamesSelection: game.gamesSelection
           }
         }
       });
-      setBoard(Array(9).fill(null));
+      setBoard(newBoard);
       setGameStatus('in_progress');
     } catch (err) {
       console.error('Error updating game:', err);
@@ -140,20 +181,14 @@ function TicTacToe({ game }) {
   const winner = calculateWinner(board);
   const isDraw = !winner && board.every(square => square !== null);
   const isGameOver = winner || isDraw;
-
-  // Add debugging logs
-  // console.log('Game State:', {
-  //   board,
-  //   winner,
-  //   isDraw,
-  //   isGameOver,
-  //   nullCount: board.filter(square => square === null).length
-  // });
+  const hasOpponent = gameData?.game?.opponentUser;
 
   const status = winner 
     ? `Winner: ${winner}`
     : isDraw
     ? "Game is a draw!" 
+    : !hasOpponent
+    ? "Waiting for opponent to join..."
     : !playerSymbol 
     ? "Waiting for opponent..."
     : isYourTurn 
@@ -169,12 +204,13 @@ function TicTacToe({ game }) {
             key={i}
             className="square"
             onClick={() => handleClick(i)}
+            disabled={!hasOpponent}
           >
             {square}
           </button>
         ))}
       </div>
-      {isGameOver && (
+      {isGameOver && hasOpponent && (
         <button className="reset" onClick={() => resetGame()}>
           Start Game
         </button>
@@ -192,12 +228,16 @@ function TicTacToe({ game }) {
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin: 20px;
+          justify-content: center;
+          margin: 20px auto;
+          width: 100%;
         }
         .board {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 2px;
+          gap: 5px;
+          justify-content: center;
+          margin: 15px auto;
         }
       `}</style>
     </div>

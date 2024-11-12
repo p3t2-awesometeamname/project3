@@ -1,0 +1,84 @@
+@import '../vars.css';
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+}
+
+.login-card {
+  padding: 20px;
+  /* background-color: var(--color-secondary); */
+  /* border-radius: 8px; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  width: 60%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.login-card h2 {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  width: 100%;
+}
+
+.login-card .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.login-card label {
+  margin-bottom: 5px;
+  font-family: var(--font-sans);
+}
+
+.login-card input {
+  padding: 8px;
+  border: 1px solid var(--color-dark);
+  border-radius: 5px;
+  width: 100%; /* Ensure all input fields have the same width */
+}
+
+.login-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.login-actions button {
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  margin-right: 10px;
+}
+
+.login-actions button:hover {
+  background-color: var(--color-dark);
+}
+
+.login-actions a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-family: var(--font-sans);
+}
+
+.login-actions a:hover {
+  text-decoration: underline;
+  color: var(--color-tertiary);
+}
