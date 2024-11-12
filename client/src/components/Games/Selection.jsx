@@ -1,5 +1,5 @@
 import { TicTacToe } from './Tictactoe/Tictactoe';
-//import { RPS } from './RPS/RPS';
+import { RPS } from './RPS/RPS';
 //import { Warships } from './Warships';
 import { ConnectFour } from './ConnectFour/ConnectFour';
 import { useQuery } from '@apollo/client';
@@ -31,8 +31,6 @@ export const Selection = ({ ID }) => {
         return <TicTacToe game={data.game} />;
       case 'warships':
         return <Warships game={data.game} />;
-      case 'rps':
-        return <RPS game={data.game} />;
       case 'connect-four':
         return <ConnectFour game={data.game} />;
       case 'RPS':
