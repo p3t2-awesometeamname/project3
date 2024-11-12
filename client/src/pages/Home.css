@@ -1,16 +1,5 @@
 @import '../vars.css';
 
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-
 .home-container {
   display: flex;
   flex-direction: column;
@@ -19,40 +8,30 @@
   font-family: var(--font-sans);
   background-color: var(--color-bg);
   color: var(--color-text);
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }
-
 .side-by-side {
   display: flex;
   justify-content: space-between;
   width: 100%;
   max-width: 1400px;
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }
-
 .create-game-section,
 .game-list-section {
   flex: 1;
   margin: 10px;
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }
-
 .create-game-section {
   margin-right: 20px;
 }
-
 .game-list-section {
   margin-left: 20px;
 }
-
 h2 {
   font-family: var(--font-sans);
   font-size: 2rem;
   color: var(--color-text);
   margin-bottom: 20px;
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }
-
 .scrollable-card {
   max-height: 600px;
   overflow-y: auto;
@@ -60,10 +39,7 @@ h2 {
   border: 1px solid var(--color-primary);
   border-radius: 10px;
   background-color: var(--color-bg);
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }
-
 .game-history-section {
   width: 60%;
-  animation: fadeIn 0.4s ease-in-out; /* Apply the fade-in animation */
 }

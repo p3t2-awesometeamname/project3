@@ -1,43 +1,38 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Auth from '../../utils/auth';
+import Auth from "../../utils/auth";
+import { Link } from "react-router-dom";
 import './Nav.css';
 
 function Nav() {
-  const location = useLocation();
-
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="nav-items">
-          <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-            <Link to="/">Home</Link>
+        <ul className="flex-row">
+          <li className="mx-1">
+            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
+            <a href="/" onClick={() => Auth.logout()}>
+              Logout
+            </a>
           </li>
-          <li className={`nav-item ${location.pathname === '/Profile' ? 'active' : ''}`}>
-            <Link to="/Profile">Profile</Link>
-          </li>
-          <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
-            <Link to="/about">About</Link>
-          </li>
-          <li className="nav-item">
-            <a href="/" onClick={() => Auth.logout()}>Logout</a>
+          <li className="mx-1">
+            <Link to="/Profile">
+              Profile
+            </Link>
           </li>
         </ul>
       );
     } else {
       return (
-        <ul className="nav-items">
-          <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-            <Link to="/">Home</Link>
+        <ul className="flex-row">
+          <li className="mx-1">
+            <Link to="/signup">
+              Signup
+            </Link>
           </li>
-          <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
-            <Link to="/about">About</Link>
-          </li>
-          <li className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
-            <Link to="/signup">Signup</Link>
-          </li>
-          <li className={`nav-item ${location.pathname === '/login' ? 'active' : ''}`}>
-            <Link to="/login">Login</Link>
+          <li className="mx-1">
+            <Link to="/login">
+              Login
+            </Link>
           </li>
         </ul>
       );
@@ -45,10 +40,17 @@ function Nav() {
   }
 
   return (
-    <header className="nav-header">
-      <h1 className="nav-logo">
-        <Link to="/">PlayWise</Link>
+    <header className="flex-row px-1">
+      <h1>
+        <Link to="/">
+          PlayWise
+        </Link>
       </h1>
+      <ul>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
       <nav>
         {showNavigation()}
       </nav>

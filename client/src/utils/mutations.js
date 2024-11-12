@@ -87,3 +87,11 @@ export const UPDATE_USER = gql`
   }
 `;
 
+export const ADD_GAME_RESULT = gql`
+  mutation addGameResult($gameType: String!, $winningPlayer: ID, $losingPlayer: ID, $draw: Boolean!, $players: [ID]!) {
+    addGameResult(gameType: $gameType, winningPlayer: $winningPlayer, losingPlayer: $losingPlayer, draw: $draw, players: $players) {
+      _id
+    }
+  }
+`;
+

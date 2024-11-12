@@ -6,7 +6,7 @@
   --secondary: #ff00ff; /* Neon Pink */
   --tertiary: #00ffff; /* Neon Cyan */
   --light: #fafafa;
-  --dark: #55698f; /* Dark Background */
+  --dark: #1a1a1a; /* Dark Background */
   --error: #ff0000; /* Bright Red */
   --spacing-one: calc(1rem * 0.5);
   --spacing-two: calc(1rem);
@@ -60,7 +60,7 @@ a {
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 header {

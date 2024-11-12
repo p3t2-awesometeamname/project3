@@ -28,7 +28,6 @@ const Home = () => {
         <div className="create-game-section">
           <h2>Create Game</h2>
           <CreateGame />
-          
         </div>
         <div className="game-list-section">
           <h2>Available Games</h2>

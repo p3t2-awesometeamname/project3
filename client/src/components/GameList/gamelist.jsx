@@ -42,6 +42,11 @@ const GameList = () => {
 
   const handleJoinGame = async (gameId, hostUserId) => {
     try {
+      // Check if user is logged in first
+      if (!Auth.loggedIn()) {
+        throw new Error('You must be logged in to join a game');
+      }
+
       const currentUser = Auth.getProfile();
       if (currentUser.data._id === hostUserId) {
         console.log(`You are the host of this game. your ID is ${currentUser.data._id} and the host ID is ${hostUserId}`);
@@ -51,13 +56,20 @@ const GameList = () => {
         return;
       }
 
-      await updateGameOpponent({
-        variables: { gameId }
+      const result = await updateGameOpponent({
+        variables: { gameId },
+        context: {
+          headers: {
+            authorization: `Bearer ${Auth.getToken()}`
+          }
+        }
       });
 
       navigate(`/Gameroom?game=${gameId}`);
     } catch (err) {
       console.error('Error joining game:', err);
+      // Optionally add user feedback here
+      alert('Unable to join game. Please make sure you are logged in.');
     }
   };
 
