@@ -9,7 +9,7 @@
 .game-screen {
   position: relative;
   width: 90%;
-  background-image: url('../assets/BG-PLAYWISE-2.gif');
+  background-image: url('/public/images/BG-PLAYWISE-2.gif');
   background-size: fill;
   background-position: center;
   border: 20px solid #4a4a4a;

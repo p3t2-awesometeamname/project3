@@ -111,7 +111,7 @@ const GameRoom = () => {
             }
           }
         });
-        navigate('/');
+        navigate('/lobby');
       } else {
         console.error('You are not a participant in this game');
       }

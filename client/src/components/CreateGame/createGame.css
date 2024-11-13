@@ -1,5 +1,20 @@
 @import '../../vars.css';
 
+@keyframes shine {
+  0% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 5px var(--color-dark);
+  }
+  50% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 20px var(--color-dark);
+  }
+  100% {
+    border-color: var(--color-dark);
+    box-shadow: 0 0 5px var(--color-dark);
+  }
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -9,7 +24,11 @@ form {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: var(--color-secondary); /* Different background color */
-  width: 95%;
+  width: 60%;
+}
+
+form:hover{
+  animation: shine 1s infinite; /* Apply the shine animation on hover */
 }
 
 label {

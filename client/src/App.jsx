@@ -8,7 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import Nav from './components/Nav';
-
+import Footer from './components/Footer/Footer.jsx';
 import { GlobalProvider } from './utils/GlobalState';
 
 
@@ -43,6 +43,7 @@ function App() {
           <Nav />
           
           <Outlet />
+          <Footer />
         </GlobalProvider>
       </div>
     </ApolloProvider>

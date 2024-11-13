@@ -33,7 +33,7 @@ const resolvers = {
       }
     },
     games: async () => {
-      return await Game.find({});
+      return await Game.find({}).populate('hostUser').populate('opponentUser');
 
     },
   },

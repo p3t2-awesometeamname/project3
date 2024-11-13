@@ -21,14 +21,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--color-secondary); /* Different background color */
+  background-color: var(--color-secondary); 
   border-radius: 8px;
-  height: 50%; /* Full viewport height */
+  height: 50%; 
   background-color: var(--color-bg);
 }
 
 .game-detail-card:hover{
-  animation: shine 1s infinite; /* Apply the shine animation on hover */
+  animation: shine 1s infinite; 
 }
 
 .game-detail-card {
@@ -37,7 +37,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 60%;
-  background-color: var(--color-secondary); /* Different background color */
+  background-color: var(--color-secondary); 
   border-radius: 8px;
   margin-top: 20px;
   margin-left: auto;  

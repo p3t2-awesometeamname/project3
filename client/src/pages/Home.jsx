@@ -25,9 +25,15 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="side-by-side">
-        <div className="create-game-section">
-          <h2>Create Game</h2>
-          <CreateGame />
+        <div className="left-column">
+          <div className="create-game-section">
+            <h2>Create Game</h2>
+            <CreateGame />
+          </div>
+          <div className="game-history-section">
+            <h2>Game History</h2>
+            <GameHistory />
+          </div>
         </div>
         <div className="game-list-section">
           <h2>Available Games</h2>
@@ -35,10 +41,6 @@ const Home = () => {
             <GameList />
           </div>
         </div>
-      </div>
-      <div className="game-history-section">
-        <h2>Game History</h2>
-        <GameHistory />
       </div>
     </div>
   );

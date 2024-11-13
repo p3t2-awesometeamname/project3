@@ -21,6 +21,20 @@ const GameList = () => {
     .map(id => games.find(game => game._id === id));
 
   const sortedGames = [...uniqueGames].sort((a, b) => {
+    // Special handling for hostUser sorting
+    if (sortConfig.key === 'hostUser') {
+      const valueA = a.hostUser?.firstName?.toString().toLowerCase() || '';
+      const valueB = b.hostUser?.firstName?.toString().toLowerCase() || '';
+      if (valueA < valueB) {
+        return sortConfig.direction === 'ascending' ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return sortConfig.direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    }
+
+    // Regular sorting for other columns
     const valueA = a[sortConfig.key]?.toString().toLowerCase();
     const valueB = b[sortConfig.key]?.toString().toLowerCase();
     if (valueA < valueB) {
@@ -42,11 +56,6 @@ const GameList = () => {
 
   const handleJoinGame = async (gameId, hostUserId) => {
     try {
-      // Check if user is logged in first
-      if (!Auth.loggedIn()) {
-        throw new Error('You must be logged in to join a game');
-      }
-
       const currentUser = Auth.getProfile();
       if (currentUser.data._id === hostUserId) {
         console.log(`You are the host of this game. your ID is ${currentUser.data._id} and the host ID is ${hostUserId}`);
@@ -56,20 +65,13 @@ const GameList = () => {
         return;
       }
 
-      const result = await updateGameOpponent({
-        variables: { gameId },
-        context: {
-          headers: {
-            authorization: `Bearer ${Auth.getToken()}`
-          }
-        }
+      await updateGameOpponent({
+        variables: { gameId }
       });
 
       navigate(`/Gameroom?game=${gameId}`);
     } catch (err) {
       console.error('Error joining game:', err);
-      // Optionally add user feedback here
-      alert('Unable to join game. Please make sure you are logged in.');
     }
   };
 
@@ -78,8 +80,8 @@ const GameList = () => {
       <div className="game-list-header">
         <div className="table-header">
           <div className="table-cell" onClick={() => requestSort('lobbyName')}>Lobby Name</div>
-          <div className="table-cell" onClick={() => requestSort('gamesSelection')}>Game Type</div>
-          <div className="table-cell" onClick={() => requestSort('hostUser')}>Host</div>
+          <div className="table-cell" onClick={() => requestSort('gamesSelection')}>Game</div>
+          <div className="table-cell" onClick={() => requestSort('hostUser.firstName')}>Host</div>
           <div className="table-cell">Action</div>
         </div>
       </div>

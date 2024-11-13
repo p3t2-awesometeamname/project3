@@ -1,21 +1,18 @@
 import React from 'react';
 import './About.css';
-import maxImage from '../assets/Max-Prof.png';
-import treyImage from '../assets/Trey-Prof.png';
-import chadImage from '../assets/Chad-Prof.png';
 
 const developers = [
   {
     name: "Chad Young",
-    image: chadImage,
+    image: "/public/images/Chad-Prof.png",
     bio: "I’m Chad, an enigneer passionate about designing and building end-to-end web applications that are both functional and visually appealing. With expertise in front-end frameworks and back-end development.",
-    github: "https://github.com/chadyoung",
-    email: "mailto:chad@example.com",
+    github: "https://github.com/Wrandy1",
+    email: "mailto:cjyoung0420@gmail.com",
     website: "https://chadyoung.com"
   },
   {
     name: "Max LC",
-    image: maxImage,
+    image: "/public/images/Max-Prof.png",
     bio: "I'm Max, a full stack web developer focused on creating responsive, user-friendly web applications. With skills in both front-end and back-end development, I turn ideas into functional, polished experiences.",
     github: "https://github.com/MaxLC00",
     email: "mailto:maxelaskey@gmail.com",
@@ -23,11 +20,11 @@ const developers = [
   },
   {
     name: "Trey Wayland",
-    image: treyImage,
+    image: "/public/images/Trey-Prof.png",
     bio: "I’m Trey, web developer passionate about building seamless, user-friendly applications from the ground up. With a strong foundation in front-end technologies like JavaScript and React, and back-end experience in Node.js and database management.",
-    github: "https://github.com/treywayland",
-    email: "mailto:trey@example.com",
-    website: "https://treywayland.com"
+    github: "https://github.com/TreyWayland7",
+    email: "mailto:waylandtrey7@gmail.com",
+    website: "https://glittery-lebkuchen-16ce00.netlify.app/"
   }
 ];
 

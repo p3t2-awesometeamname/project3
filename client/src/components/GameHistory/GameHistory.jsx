@@ -57,7 +57,7 @@ const GameHistory = () => {
           <div className="table-cell" onClick={() => requestSort('gameType')}>Game Type</div>
           <div className="table-cell" onClick={() => requestSort('winningPlayer')}>Winner</div>
           <div className="table-cell" onClick={() => requestSort('players')}>Players</div>
-          <div className="table-cell" onClick={() => requestSort('date')}>Date</div>
+          {/* <div className="table-cell" onClick={() => requestSort('date')}>Date</div> */}
         </div>
       </div>
       <div className="game-history-body">
@@ -71,7 +71,7 @@ const GameHistory = () => {
               <div className="table-cell">
                 {result.players.map(player => `${player.firstName} ${player.lastName}`).join(', ')}
               </div>
-              <div className="table-cell">{new Date(result.date).toLocaleDateString()}</div>
+              {/* <div className="table-cell">{new Date(result.date).toLocaleDateString()}</div> */}
             </Link>
           ))}
         </div>
