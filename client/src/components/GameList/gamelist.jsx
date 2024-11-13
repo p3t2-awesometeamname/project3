@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GAMES, UPDATE_GAME_OPPONENT } from '../../utils/queries';
 import { useNavigate } from 'react-router-dom';
-import './GameList.css';
+import './gamelist.css';
 import Auth from '../../utils/auth';
 
 const GameList = () => {
