@@ -80,11 +80,11 @@ const CreateGame = () => {
           />
           Connect Four
         </label>
-        <label className={gameType === 'rock-paper-scissors' ? 'selected' : ''}>
+        <label className={gameType === 'rps' ? 'selected' : ''}>
           <input
             type="radio"
-            value="rock-paper-scissors"
-            checked={gameType === 'rock-paper-scissors'}
+            value="rps"
+            checked={gameType === 'rps'}
             onChange={handleGameTypeChange}
           />
           RPS
